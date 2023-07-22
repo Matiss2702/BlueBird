@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Errors;
 
 use App\Core\View;
@@ -11,7 +12,7 @@ class ErrorHandler
 {
     public static function handle($exception)
     {
-        if (APP_DEBUG) {
+        if (onProd()) {
             echo '<pre>';
             throw $exception; // En preprod, on affiche toutes les erreurs.
         }
@@ -51,5 +52,4 @@ class ErrorHandler
 
         $view->render();
     }
-
 }

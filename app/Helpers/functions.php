@@ -49,3 +49,15 @@ function snakeToCamelCase($str): string
 {
     return str_replace('_', '', ucwords($str, '_'));
 }
+function generateSlug($string)
+{
+    $slug = preg_replace('/[^a-zA-Z0-9-]/', '-', $string);
+
+    $slug = strtolower($slug);
+
+    $slug = preg_replace('/-+/', '-', $slug);
+
+    $slug = trim($slug, '-');
+
+    return $slug;
+}
