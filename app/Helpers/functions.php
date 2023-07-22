@@ -22,13 +22,13 @@ function isConnected(): bool
 
 function onProd(): bool
 {
-    return true;
+    return false;
 }
 
 function getBaseUrl(): string
 {
     if (onProd()) {
-        return 'https://bluebird.lotfitouil.fr';
+        return 'http://154.56.57.33:8081/';
     } else {
         return 'http://localhost:8081';
     }

@@ -34,18 +34,18 @@
                                         <td class="d-none d-sm-table-cell"><?= $menu->slug ?></td>
                                         <td class="d-none d-sm-table-cell"><?= $menu->id_parent ?></td>
                                         <?php
-                                            $zoneText = '';
-                                            switch ($menu->zone) {
-                                                case 0:
-                                                    $zoneText = 'Topbar';
-                                                    break;
-                                                case 1:
-                                                    $zoneText = 'Sidebar';
-                                                    break;
-                                                case 2:
-                                                    $zoneText = 'Footer';
-                                                    break;
-                                            }
+                                        $zoneText = '';
+                                        switch ($menu->zone) {
+                                            case 0:
+                                                $zoneText = 'Topbar';
+                                                break;
+                                            case 1:
+                                                $zoneText = 'Sidebar';
+                                                break;
+                                            case 2:
+                                                $zoneText = 'Footer';
+                                                break;
+                                        }
                                         ?>
                                         <td><?= $zoneText ?></td>
                                         <td><?= $menu->status ? 'Actif' : 'Inactif' ?></td>
