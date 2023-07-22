@@ -65,14 +65,12 @@
     </div>
 </div>
 <script>
-    // Écoute l'événement "input" du champ "title"
     document.getElementById('title').addEventListener('input', function() {
-        var titleValue = this.value; // Récupère la valeur du champ "title"
-        var slugValue = generateSlug(titleValue); // Génère le slug à partir du titre
-        document.getElementById('slug').value = '/' + slugValue; // Ajoute le slash au début du slug
+        var titleValue = this.value;
+        var slugValue = generateSlug(titleValue);
+        document.getElementById('slug').value = '/' + slugValue;
     });
 
-    // Fonction pour générer le slug à partir du titre
     function generateSlug(title) {
         var slug = title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
         return slug;

@@ -30,18 +30,18 @@
                 <div class="form-group">
                     <label for="zone">Zone</label>
                     <?php
-                        $zoneText = '';
-                        switch ($menu->getZone()) {
-                            case 0:
-                                $zoneText = 'Topbar';
-                                break;
-                            case 1:
-                                $zoneText = 'Sidebar';
-                                break;
-                            case 2:
-                                $zoneText = 'Footer';
-                                break;
-                            }
+                    $zoneText = '';
+                    switch ($menu->getZone()) {
+                        case 0:
+                            $zoneText = 'Topbar';
+                            break;
+                        case 1:
+                            $zoneText = 'Sidebar';
+                            break;
+                        case 2:
+                            $zoneText = 'Footer';
+                            break;
+                    }
                     ?>
                     <input type="text" id="zone" name="zone" class="form-control" value="<?= $zoneText ?>" readonly>
                 </div>
