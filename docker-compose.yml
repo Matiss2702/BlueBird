@@ -1,0 +1,34 @@
+version: '3'
+services:
+  app:
+    build: docker
+    ports :
+     - "8081:80"
+    volumes:
+     - ./public:/var/www/html/public
+     - ./app:/var/www/html/app/
+     - ./config:/var/www/html/config/
+     - ./server/000-default.conf:/etc/apache2/sites-available/000-default.conf
+     - ./server/apache2.conf:/etc/apache2/apache2.conf
+     - ./server/php.ini:/usr/local/etc/php/php.ini
+
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+        - ./.env
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8082:8080
+
+volumes:
+  pgdata:
