@@ -2,12 +2,14 @@
 
 namespace App;
 
-/*
 if (file_exists(__DIR__ . '/setup/index.html') && strpos($_SERVER['REQUEST_URI'], '/api/') !== 0) {
     header('Location: /setup/index.html');
     exit;
 }
-*/
+
+if (file_exists(__DIR__ . '/website.config.php')) {
+    require __DIR__ . '/website.config.php';
+}
 
 use App\Core\Router;
 use App\Errors\ErrorHandler;
@@ -21,13 +23,13 @@ if (session_status() == PHP_SESSION_NONE) {
 
 spl_autoload_register(function ($class) {
     $file = str_replace(["App\\", "\\"], ["", "/"], $class);
-    $file = __DIR__ . '/../app/' . $file.".php";
+    $file = __DIR__ . '/../app/' . $file . ".php";
 
     if (file_exists($file)) {
         include $file;
     }
 });
-    
+
 set_exception_handler([ErrorHandler::class, 'handle']);
 
 try {
@@ -40,7 +42,6 @@ try {
     require __DIR__ . '/../app/Routes/api.php';
 
     $router->resolve();
-
 } catch (\Exception $e) {
     ErrorHandler::handle($e);
 }

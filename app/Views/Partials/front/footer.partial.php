@@ -11,12 +11,13 @@
                     ksort($orderedMenus);
 
                     foreach ($orderedMenus as $menu) : ?>
-                        <?php  if($menu->status == 1) : ?>
+                        <?php if ($menu->status == 1) : ?>
                             <li><a href="<?= $menu->slug ?>"><?= $menu->title ?></a></li>
-                        <?php endif;?>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </ul>
-                <p>BlueBird &copy; 2023 - Tous droits réservés</p>
+                <p>
+                <p><?= WEBSITE_TITLE; ?> &copy; 2023 - Tous droits réservés</p>
             </div>
             <div class="col-lg-6">
                 <div class="footer-social">
