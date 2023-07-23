@@ -14,7 +14,11 @@ const routes = {
     onSubmit: onSubmitStep3
   },
   '/step4': {
-    render: renderStep4
+    render: renderStep4,
+    onSubmit: onSubmitStep4
+  },
+  '/step5': {
+    render: renderStep5
   }
 };
 
@@ -24,7 +28,7 @@ function startInstallation() {
   if (routes.hasOwnProperty(currentPath)) {
     routes[currentPath].render();
   } else {
-    navigateTo('/step1');
+    navigateTo('/step4');
   }
 }
 
@@ -128,6 +132,43 @@ function onSubmitStep3(event) {
 }
 
 function renderStep4() {
+  fetch('/api/installation/step4')
+    .then(response => response.json())
+    .then(formStructure => {
+      const formElement = generateStructure(formStructure);
+      formElement.addEventListener('submit', routes['/step4'].onSubmit);
+      const appElement = document.getElementById('app');
+      while (appElement.firstChild) {
+        appElement.removeChild(appElement.firstChild);
+      }
+      appElement.appendChild(formElement);
+    });
+}
+
+function onSubmitStep4(event) {
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+
+  fetch('/api/installation/setWebInfo', {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.json())
+    .then(responseData => {
+      if (responseData.success) {
+        navigateTo('/step5');
+      } else {
+        let errors = responseData.errors;
+
+        clearErrorMessages();
+
+        displayErrorMessages(errors);
+      }
+    });
+}
+
+function renderStep5() {
   document.getElementById('app').innerHTML = '';
 
   let element = document.createElement('p');
