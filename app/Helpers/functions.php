@@ -3,7 +3,7 @@
 function view(string $view, string $template, array $data = [], array $scripts = []): void
 {
     $viewInstance = new App\Core\View($view, $template);
-    if ($template === 'front') {
+    if ($template === 'front' || $template === 'account') {
         $viewInstance->assign('menus', App\Models\Menu::all());
     }
     foreach ($data as $key => $value) {

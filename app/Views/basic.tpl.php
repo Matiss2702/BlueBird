@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,9 +10,9 @@
     <!-- Inclusion des assets -->
     <?php $this->partial('assets'); ?>
 </head>
+
 <body>
     <?php $this->partial('front/basic-topbar'); ?>
-
     <!-- Contenu de la page -->
     <div class="container mt-5">
         <?php include $this->view; ?>
@@ -24,4 +25,5 @@
     <!-- Inclusion des scripts -->
     <?php $this->partial('scripts'); ?>
 </body>
+
 </html>
