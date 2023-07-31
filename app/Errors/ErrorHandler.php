@@ -12,10 +12,10 @@ class ErrorHandler
 {
     public static function handle($exception)
     {
-        if (onProd()) {
+        // if (onProd()) {
             echo '<pre>';
             throw $exception; // En preprod, on affiche toutes les erreurs.
-        }
+        // }
 
         $param = [];
         $viewPath = 'Error/internal-server-error';

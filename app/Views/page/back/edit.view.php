@@ -1,6 +1,6 @@
 <div class="card w-100 mb-3">
     <div class="card-header d-flex">
-        <h4 class="card-title">Modifier la page #<?= $page->getId() ?></h4>
+        <h4 class="card-title">Nouvelle page</h4>
         <a href="/admin/page/list" class="btn btn-primary ml-auto">
             <span class="icon text-white-50">
                 <i class="fa fa-arrow-left"></i>
@@ -10,77 +10,57 @@
     </div>
     <div class="container mt-5">
         <div class="w-75">
-            <form action="/admin/page/update/<?= $page->getId() ?>" method="POST">
+            <form action="/admin/page/update/<?=$page->getId()?>" method="POST">
                 <div class="form-group">
-                    <label for="header_title">Titre d'en-tête</label>
-                    <textarea id="header_title" name="header_title" class="form-control"><?= $old->header_title ?? $page->getHeaderTitle() ?></textarea>
-                    <?php if (isset($errors['header_title'])) : ?>
-                        <?php foreach ($errors['header_title'] as $error) : ?>
+                    <label for="title">Titre</label>
+                    <input type="text" id="title" name="title" class="form-control" value="<?= $old->title ?? $page->getTitle(); ?>">
+                    <?php if (isset($errors['title'])) : ?>
+                        <?php foreach ($errors['title'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-
                 <div class="form-group">
-                    <label for="header_description">Description d'en-tête</label>
-                    <textarea id="header_description" name="header_description" class="form-control"><?= $old->header_description ?? $page->getHeaderDescription() ?></textarea>
-                    <?php if (isset($errors['header_description'])) : ?>
-                        <?php foreach ($errors['header_description'] as $error) : ?>
+                    <label for="slug">Slug</label>
+                    <input type="text" id="slug" name="slug" class="form-control" value="<?= $old->slug ?? $page->getSlug(); ?>">
+                    <?php if (isset($errors['slug'])) : ?>
+                        <?php foreach ($errors['slug'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-
                 <div class="form-group">
-                    <label for="main_title">Titre principal</label>
-                    <textarea id="main_title" name="main_title" class="form-control"><?= $old->main_title ?? $page->getMainTitle() ?></textarea>
-                    <?php if (isset($errors['main_title'])) : ?>
-                        <?php foreach ($errors['main_title'] as $error) : ?>
+                    <label for="description">Description de la page</label>
+                    <textarea id="description" name="description" class="form-control"><?= $old->description ?? $page->getDescription(); ?></textarea>
+                    <?php if (isset($errors['description'])) : ?>
+                        <?php foreach ($errors['description'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-
                 <div class="form-group">
-                    <label for="main_content">Contenu principal</label>
-                    <textarea id="main_content" name="main_content" class="form-control"><?= $old->main_content ?? $page->getMainContent() ?></textarea>
-                    <?php if (isset($errors['main_content'])) : ?>
-                        <?php foreach ($errors['main_content'] as $error) : ?>
+                    <label for="content">Contenu</label>
+                    <textarea id="content" name="content" class="form-control"><?= $old->content ?? $page->getContent() ?></textarea>
+                    <?php if (isset($errors['content'])) : ?>
+                        <?php foreach ($errors['content'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-
-                <div class="form-group">
-                    <label for="sidebar_title">Titre de la barre latérale</label>
-                    <textarea id="sidebar_title" name="sidebar_title" class="form-control"><?= $old->sidebar_title ?? $page->getSidebarTitle() ?></textarea>
-                    <?php if (isset($errors['sidebar_title'])) : ?>
-                        <?php foreach ($errors['sidebar_title'] as $error) : ?>
-                            <div class="text-danger"><?= $error; ?></div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-
-                <div class="form-group">
-                    <label for="sidebar_content">Contenu de la barre latérale</label>
-                    <textarea id="sidebar_content" name="sidebar_content" class="form-control"><?= $old->sidebar_content ?? $page->getSidebarContent() ?></textarea>
-                    <?php if (isset($errors['sidebar_content'])) : ?>
-                        <?php foreach ($errors['sidebar_content'] as $error) : ?>
-                            <div class="text-danger"><?= $error; ?></div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-
                 <button type="submit" class="btn btn-primary">Enregistrer</button>
             </form>
         </div>
     </div>
 </div>
-
-<script src="https://cdn.tiny.cloud/1/fuvwzdwd88rngedna4ks4mrc13wcqg32i3kl2z4qqu2oyoeo/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
 <script>
-    tinymce.init({
-        selector: 'textarea'
+    document.getElementById('title').addEventListener('input', function() {
+        var titleValue = this.value;
+        var slugValue = generateSlug(titleValue);
+        document.getElementById('slug').value = '/' + slugValue;
     });
+
+    function generateSlug(title) {
+        var slug = title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+        return slug;
+    }
 </script>

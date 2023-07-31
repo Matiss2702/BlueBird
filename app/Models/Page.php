@@ -7,21 +7,30 @@ use App\Core\Model;
 class Page extends Model
 {
     protected static $table = DB_PREFIX . 'page';
-    protected static $fillable = ['header_title', 'header_description', 'main_title', 'main_content', 'sidebar_title', 'sidebar_content'];
+    protected static $fillable = ['title', 'slug', 'description', 'content', 'created_at', 'updated_at'];
 
     protected $id;
 
+    protected $title;
     protected $slug;
-    protected $header_title;
-    protected $header_description;
-    protected $main_title;
-    protected $main_content;
-    protected $sidebar_title;
-    protected $sidebar_content;
+    protected $description;
+    protected $content;
+    protected $created_at;
+    protected $updated_at;
 
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
     }
 
     public function getSlug()
@@ -34,63 +43,39 @@ class Page extends Model
         $this->slug = $slug;
     }
 
-    public function getHeaderTitle()
+    public function getDescription()
     {
-        return $this->header_title;
+        return $this->description;
     }
 
-    public function setHeaderTitle($header_title)
+    public function setDescription($description)
     {
-        $this->header_title = $header_title;
+        $this->description = $description;
     }
 
-    public function getHeaderDescription()
+    public function getContent()
     {
-        return $this->header_description;
+        return $this->content;
     }
 
-    public function setHeaderDescription($header_description)
+    public function setContent($content)
     {
-        $this->header_description = $header_description;
+        $this->content = $content;
     }
 
-    public function getMainTitle()
-    {
-        return $this->main_title;
+    public function getCreatedAt() {
+        return $this->created_at;
     }
 
-    public function setMainTitle($main_title)
-    {
-        $this->main_title = $main_title;
+    public function setCreatedAt($created_at) {
+        return $this->created_at = $created_at;
     }
 
-    public function getMainContent()
-    {
-        return $this->main_content;
+    public function getUpdatedAt() {
+        return $this->updated_at;
     }
 
-    public function setMainContent($main_content)
-    {
-        $this->main_content = $main_content;
-    }
-
-    public function getSidebarTitle()
-    {
-        return $this->sidebar_title;
-    }
-
-    public function setSidebarTitle($sidebar_title)
-    {
-        $this->sidebar_title = $sidebar_title;
-    }
-
-    public function getSidebarContent()
-    {
-        return $this->sidebar_content;
-    }
-
-    public function setSidebarContent($sidebar_content)
-    {
-        $this->sidebar_content = $sidebar_content;
+    public function setUpdatedAt($updated_at) {
+        $this->updated_at = $updated_at;
     }
 }

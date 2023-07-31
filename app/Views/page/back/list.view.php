@@ -11,14 +11,14 @@
                         <span class="d-none d-sm-inline-block">Créer une nouvelle page</span>
                     </a>
                 </div>
-                <div class="table-responsive">
-                    <?php if ($pages) : ?>
-                        <table class="table">
+                <?php if ($pages) : ?>
+                    <div class="table-responsive p-3">
+                        <table class="table display dataTable mt-4 " id="page-list">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">ID</th>
-                                    <th class="d-none d-sm-table-cell">Titre d'en-tête</th>
-                                    <th class="d-none d-sm-table-cell">Contenu principal</th>
+                                    <th class="d-none d-sm-table-cell">Titre</th>
+                                    <th class="d-none d-sm-table-cell">Slug</th>
                                     <th class="d-none d-sm-table-cell">Date de création</th>
                                     <th class="d-table-cell">Action</th>
                                 </tr>
@@ -27,8 +27,8 @@
                                 <?php foreach ($pages as $page) : ?>
                                     <tr>
                                         <td class="d-table-cell"><?= $page->id ?></td>
-                                        <td class="d-none d-sm-table-cell"><?= $page->header_title ?></td>
-                                        <td class="d-none d-sm-table-cell"><?= $page->main_content ?></td>
+                                        <td class="d-none d-sm-table-cell"><?= $page->title ?></td>
+                                        <td class="d-none d-sm-table-cell"><?= $page->slug ?></td>
                                         <td class="d-none d-sm-table-cell"><?= date('Y-m-d H:i:s', strtotime($page->created_at)) ?></td>
                                         <td class="d-table-cell">
                                             <!-- Boutons d'action -->
@@ -39,9 +39,18 @@
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
+                            <tfoot class="thead-light">
+                                <tr>
+                                    <th class="d-table-cell">ID</th>
+                                    <th class="d-none d-sm-table-cell">Titre</th>
+                                    <th class="d-none d-sm-table-cell">Slug</th>
+                                    <th class="d-none d-sm-table-cell">Date de création</th>
+                                    <th class="d-table-cell">Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
-                    <?php endif; ?>
-                </div>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

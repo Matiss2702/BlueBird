@@ -13,4 +13,18 @@ class PageController extends Controller
     {
         parent::__construct();
     }
+
+    public function indexAction($id): void
+    {
+        $page = Page::find($id);
+
+        if (!$page) {
+            redirectHome();
+        }
+
+        view('page/front/index', 'front', [
+                'page' => $page
+            ]
+        );
+    }
 }
