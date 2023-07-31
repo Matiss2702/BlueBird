@@ -17,7 +17,6 @@
 
 <body>
     <?php $this->partial('front/topbar'); ?>
-
     <!-- Contenu de la page -->
     <div class="container mt-5">
         <?php include $this->view; ?>

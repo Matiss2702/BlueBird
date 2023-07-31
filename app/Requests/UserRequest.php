@@ -111,9 +111,7 @@ class UserRequest extends FormRequest
         if (!$user instanceof User) {
             $user = User::find($user['id']);
         }
-        
-        // echo '<pre>',
-        // die(var_dump($validatedData));
+
         $user->setFirstname($validatedData['firstname']);
         $user->setLastname($validatedData['lastname']);
         $user->setEmail($validatedData['email']);
