@@ -105,7 +105,7 @@ $router->get('/admin/menu/show/{id}', BackMenuController::class, 'show')->middle
 $router->get('/admin/menu/edit/{id}', BackMenuController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
 $router->get('/movie/{id}', MovieFrontController::class, 'index');
-$router->get('{id}', FrontPageController::class, 'index');
+$router->get('/{slug}', FrontPageController::class, 'index');
 
 /**
  * POST

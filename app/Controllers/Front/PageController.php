@@ -14,16 +14,28 @@ class PageController extends Controller
         parent::__construct();
     }
 
-    public function indexAction($id): void
+    public function indexAction($slug): void
     {
-        $page = Page::find($id);
+        $title = WEBSITE_TITLE;
+        $description = WEBSITE_DESCRIPTION;
+
+        $slug = '/'.$slug;
+        $page = Page::where("slug", $slug);
 
         if (!$page) {
-            redirectHome();
+            view('Error/not-found', 'front', [
+                'status' => '404',
+                'title' => $title . ' - Page non trouvéee', 
+            ]);
         }
 
+        $title = WEBSITE_TITLE .' - '. $page->getTitle();
+        $description = $page->getDescription();
+        
         view('page/front/index', 'front', [
-                'page' => $page
+                'page' => $page,
+                'title' => $title,
+                'description' => $description
             ]
         );
     }

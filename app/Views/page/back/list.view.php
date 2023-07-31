@@ -28,7 +28,9 @@
                                     <tr>
                                         <td class="d-table-cell"><?= $page->id ?></td>
                                         <td class="d-none d-sm-table-cell"><?= $page->title ?></td>
-                                        <td class="d-none d-sm-table-cell"><?= $page->slug ?></td>
+                                        <td class="d-none d-sm-table-cell">
+                                            <a href="<?= $page->slug ?>" target="_blank"><?= $page->slug ?></a>
+                                        </td>
                                         <td class="d-none d-sm-table-cell"><?= date('Y-m-d H:i:s', strtotime($page->created_at)) ?></td>
                                         <td class="d-table-cell">
                                             <!-- Boutons d'action -->
