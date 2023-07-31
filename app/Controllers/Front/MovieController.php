@@ -16,7 +16,7 @@ class MovieController extends Controller
         parent::__construct();
     }
 
-    public function showAction($id): void
+    public function indexAction($id): void
     {
         $movie = Movie::find($id);
         if (!$movie)

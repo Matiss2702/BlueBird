@@ -28,7 +28,7 @@ function startInstallation() {
   if (routes.hasOwnProperty(currentPath)) {
     routes[currentPath].render();
   } else {
-    navigateTo('/step4');
+    navigateTo('/');
   }
 }
 
