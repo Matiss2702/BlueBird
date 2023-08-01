@@ -1,12 +1,27 @@
 <?php
+
 namespace App\Controllers;
 
-class MainController extends Controller{
+use App\Models\User;
 
-    public function homeAction() {
+class MainController extends Controller
+{
+    public function homeAction()
+    {
+        session_start();
+
+        $isConnected = isConnected();
+        $user = null;
+
+        if ($isConnected) {
+            $email = $_SESSION['login'];
+
+            $user = User::where("email", $email);
+        }
+
         view('Main/home', 'front', [
-            'isConnected' => isConnected()
+            'isConnected' => $isConnected,
+            'user' => ($user !== null) ? $user->getFirstname() : null
         ]);
     }
-
 }
