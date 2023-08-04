@@ -1,6 +1,6 @@
 <div class="card w-100 mb-3">
     <div class="card-header d-flex">
-        <h4 class="card-title">Détails de l'article #<?= $menu->getId() ?></h4>
+        <h4 class="card-title">Détails du menu #<?= $menu->getId() ?></h4>
         <a href="/admin/menu/list" class="btn btn-primary ml-auto">
             <span class="icon text-white-50">
                 <i class="fa fa-arrow-left"></i>
@@ -30,18 +30,18 @@
                 <div class="form-group">
                     <label for="zone">Zone</label>
                     <?php
-                        $zoneText = '';
-                        switch ($menu->getZone()) {
-                            case 0:
-                                $zoneText = 'Topbar';
-                                break;
-                            case 1:
-                                $zoneText = 'Sidebar';
-                                break;
-                            case 2:
-                                $zoneText = 'Footer';
-                                break;
-                            }
+                    $zoneText = '';
+                    switch ($menu->getZone()) {
+                        case 0:
+                            $zoneText = 'Topbar';
+                            break;
+                        case 1:
+                            $zoneText = 'Sidebar';
+                            break;
+                        case 2:
+                            $zoneText = 'Footer';
+                            break;
+                    }
                     ?>
                     <input type="text" id="zone" name="zone" class="form-control" value="<?= $zoneText ?>" readonly>
                 </div>

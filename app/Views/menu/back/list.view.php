@@ -5,10 +5,10 @@
         <div class="container-fluid">
             <div class="bg-white">
                 <div class="d-flex justify-content-between align-items-center p-3">
-                    <h4 class="h4 font-weight-bold text-primary">Articles</h4>
+                    <h4 class="h4 font-weight-bold text-primary">Menu</h4>
                     <a href="/admin/menu/create" class="btn btn-primary btn-sm">
                         <i class="fa fa-plus"></i>
-                        <span class="d-none d-sm-inline-block">Créer un nouvel article</span>
+                        <span class="d-none d-sm-inline-block">Créer un nouveau menu</span>
                     </a>
                 </div>
                 <div class="table-responsive">
@@ -34,18 +34,18 @@
                                         <td class="d-none d-sm-table-cell"><?= $menu->slug ?></td>
                                         <td class="d-none d-sm-table-cell"><?= $menu->id_parent ?></td>
                                         <?php
-                                            $zoneText = '';
-                                            switch ($menu->zone) {
-                                                case 0:
-                                                    $zoneText = 'Topbar';
-                                                    break;
-                                                case 1:
-                                                    $zoneText = 'Sidebar';
-                                                    break;
-                                                case 2:
-                                                    $zoneText = 'Footer';
-                                                    break;
-                                            }
+                                        $zoneText = '';
+                                        switch ($menu->zone) {
+                                            case 0:
+                                                $zoneText = 'Topbar';
+                                                break;
+                                            case 1:
+                                                $zoneText = 'Sidebar';
+                                                break;
+                                            case 2:
+                                                $zoneText = 'Footer';
+                                                break;
+                                        }
                                         ?>
                                         <td><?= $zoneText ?></td>
                                         <td><?= $menu->status ? 'Actif' : 'Inactif' ?></td>
