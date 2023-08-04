@@ -1,6 +1,6 @@
 <div class="card w-100 mb-3">
     <div class="card-header d-flex">
-        <h4 class="card-title">Nouvel article</h4>
+        <h4 class="card-title">Nouveau menu</h4>
         <a href="/admin/menu/list" class="btn btn-primary ml-auto">
             <span class="icon text-white-50">
                 <i class="fa fa-arrow-left"></i>
@@ -34,6 +34,19 @@
                     <input type="number" id="orders" max="10" name="orders" class="form-control" value="<?= $old->orders ?? '' ?>">
                     <?php if (isset($errors['orders'])) : ?>
                         <?php foreach ($errors['orders'] as $error) : ?>
+                            <div class="text-danger"><?= $error; ?></div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="form-group">
+                    <label for="zone">Zone</label>
+                    <select id="zone" name="zone" class="form-control">
+                        <option value="0" <?= isset($old->zone) && intval($old->zone) === 0 ? 'selected' : '' ?>>Topbar</option>
+                        <option value="1" <?= isset($old->zone) && intval($old->zone) === 1 ? 'selected' : '' ?>>Sidebar</option>
+                        <option value="2" <?= isset($old->zone) && intval($old->zone) === 2 ? 'selected' : '' ?>>Footer</option>
+                    </select>
+                    <?php if (isset($errors['status'])) : ?>
+                        <?php foreach ($errors['status'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
                         <?php endforeach; ?>
                     <?php endif; ?>
