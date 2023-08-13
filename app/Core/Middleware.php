@@ -6,10 +6,20 @@ use App\Core\Model;
 
 abstract class Middleware extends Model
 {
-    // TODO : il faut utiliser les tokens au lieu d'un login
+
     protected function getTokenLogin()
     {
-        return $_SESSION['login'];
+        return $_SESSION['user_token'];
     }
 
+    protected function generateToken()
+    {
+        return md5(uniqid(rand(), true));
+    }
+
+    protected function associateTokenWithUser($userId)
+    {
+        $token = $this->generateToken();
+        $_SESSION['user_token'] = $token;
+    }
 }

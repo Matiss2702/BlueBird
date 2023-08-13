@@ -41,7 +41,7 @@ class LoginRequest extends FormRequest
         $user = User::where('email', $validatedData['email']);
 
         if ($user && password_verify($validatedData['password'], $user->getPassword())) {
-            $_SESSION['login'] = $user->getEmail();
+            $_SESSION['user_token'] = $user->getEmail();
             redirectHome();
         } else {
             $this->addError('form', 'Identifiants incorrects.');

@@ -88,10 +88,10 @@ class Router
         if (isConnected()) {
             $isAccountNotVerified = QueryBuilder::table('email_activation_token')
                 ->select(['user.id'])
-                ->join('user', function($join) {
+                ->join('user', function ($join) {
                     $join->on('user.id', '=', 'email_activation_token.id_user');
                 })
-                ->where('user.email', $_SESSION['login'])
+                ->where('user.email', $_SESSION['user_token'])
                 ->WhereNotNull('verified_at')
                 ->notExists();
 
@@ -164,11 +164,11 @@ class Router
         $nbParts = count($controllerParts);
 
         if (array_intersect($allowedNamespaces, $controllerParts)) {
-            $namespace = $controllerParts[$nbParts-2];
+            $namespace = $controllerParts[$nbParts - 2];
             $namespace .= '/';
         }
 
-        $controllerFileName = $controllerParts[$nbParts-1];
+        $controllerFileName = $controllerParts[$nbParts - 1];
         $controllerFilePath = __DIR__ . '/../Controllers/' . $namespace . $controllerFileName . '.php';
 
         if (!file_exists($controllerFilePath)) {
