@@ -17,7 +17,7 @@ class DatabaseSetupController extends Controller
     {
         header('Content-Type: application/json');
 
-        $request = new DatabaseRequest();;
+        $request = new DatabaseRequest();
         if (!$request->createDatabase()) {
             echo json_encode(['success' => false, 'errors' => array_values($request->getErrors())]);
             return;
