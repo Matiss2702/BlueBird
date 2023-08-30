@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Requests;
 
 use App\Core\FormRequest;
@@ -78,7 +79,7 @@ class RegisterRequest extends FormRequest
         $user = user::find($userId);
 
         if ($user) {
-            $_SESSION['login'] = $user->getEmail();
+            $_SESSION['user_token'] = $user->getEmail();
             redirectHome();
         }
     }

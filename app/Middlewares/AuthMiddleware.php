@@ -16,6 +16,6 @@ class AuthMiddleware extends Middleware
 
     private function isUserAuthenticated(): bool
     {
-        return isset($_SESSION['login']);
+        return isset($_SESSION['user_token']);
     }
 }

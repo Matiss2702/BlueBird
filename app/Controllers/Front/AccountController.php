@@ -37,7 +37,7 @@ class AccountController extends Controller
             ->join('user', function ($join) {
                 $join->on('user.id', '=', 'email_activation_token.id_user');
             })
-            ->where('user.email', $_SESSION['login'])
+            ->where('user.email', $_SESSION['user_token'])
             ->WhereNotNull('verified_at')
             ->exists();
 
@@ -83,7 +83,7 @@ class AccountController extends Controller
     // TODO : mettre en place un temps d'attente minimum entre 2 envois
     public function resendMailAction(): void
     {
-        $user = User::where('email', $_SESSION['login']);
+        $user = User::where('email', $_SESSION['user_token']);
         EmailActivationToken::sendActivationEmail($user);
 
         $this->redirectToVerificationPage();
@@ -93,7 +93,7 @@ class AccountController extends Controller
     {
         $user = QueryBuilder::table('user')
             ->select()
-            ->where('email', $_SESSION['login'])
+            ->where('email', $_SESSION['user_token'])
             ->first();
 
         $account = User::find($user['id']);
@@ -110,7 +110,7 @@ class AccountController extends Controller
     {
         $user = QueryBuilder::table('user')
             ->select()
-            ->where('email', $_SESSION['login'])
+            ->where('email', $_SESSION['user_token'])
             ->first();
 
         $account = User::find($user['id']);
@@ -128,7 +128,7 @@ class AccountController extends Controller
     {
         $user = QueryBuilder::table('user')
             ->select()
-            ->where('email', $_SESSION['login'])
+            ->where('email', $_SESSION['user_token'])
             ->first();
 
         $account = User::find($user['id']);

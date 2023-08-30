@@ -17,7 +17,7 @@ function view(string $view, string $template, array $data = [], array $scripts =
 
 function isConnected(): bool
 {
-    return isset($_SESSION['login']);
+    return isset($_SESSION['user_token']);
 }
 
 function onProd(): bool

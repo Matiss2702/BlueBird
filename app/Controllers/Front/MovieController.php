@@ -32,7 +32,7 @@ class MovieController extends Controller
 
         $userId = QueryBuilder::table('user')
             ->select(['id'])
-            ->where('email', $_SESSION['login'] ?? '')
+            ->where('email', $_SESSION['user_token'] ?? '')
             ->getColumn('id');
 
         view('movie/front/show', 'front', [
