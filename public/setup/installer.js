@@ -18,7 +18,8 @@ const routes = {
     onSubmit: onSubmitStep4
   },
   '/step5': {
-    render: renderStep5
+    render: renderStep5,
+    onSubmit: onSubmitStep5
   }
 };
 
@@ -28,7 +29,7 @@ function startInstallation() {
   if (routes.hasOwnProperty(currentPath)) {
     routes[currentPath].render();
   } else {
-    navigateTo('/step4');
+    navigateTo('/step1');
   }
 }
 
@@ -169,12 +170,40 @@ function onSubmitStep4(event) {
 }
 
 function renderStep5() {
-  document.getElementById('app').innerHTML = '';
+  fetch('/api/installation/step5')
+    .then(response => response.json())
+    .then(formStructure => {
+      const formElement = generateStructure(formStructure);
+      formElement.addEventListener('submit', routes['/step5'].onSubmit);
+      const appElement = document.getElementById('app');
+      while (appElement.firstChild) {
+        appElement.removeChild(appElement.firstChild);
+      }
+      appElement.appendChild(formElement);
+    });
+}
 
-  let element = document.createElement('p');
-  element.textContent = 'Installation terminée !';
-  element.className = 'container alert alert-success';
-  document.querySelector('#app').appendChild(element);
+function onSubmitStep5(event) {
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+
+  fetch('/api/installation/endSetup', {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.json())
+    .then(responseData => {
+      if (responseData.success) {
+        window.location.href = '/';
+      } else {
+        let errors = responseData.errors;
+
+        clearErrorMessages();
+
+        displayErrorMessages(errors);
+      }
+    });
 }
 
 function clearErrorMessages() {
