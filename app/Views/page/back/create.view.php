@@ -21,6 +21,24 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-group">
+                    <label for="slug">Slug</label>
+                    <input type="text" id="slug" name="slug" class="form-control" value="<?= $old->slug ?? '' ?>">
+                    <?php if(isset($errors['slug'])): ?>
+                        <?php foreach($errors['slug'] as $error): ?>
+                            <div class="text-danger"><?= $error; ?></div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" name="description" class="form-control" value="<?= $old->description ?? '' ?>">
+                    <?php if(isset($errors['description'])): ?>
+                        <?php foreach($errors['description'] as $error): ?>
+                            <div class="text-danger"><?= $error; ?></div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="form-group">
                     <label for="content">Contenu</label>
                     <textarea id="content" name="content" class="form-control"><?= $old->content ?? '' ?></textarea>
                     <?php if(isset($errors['content'])): ?>

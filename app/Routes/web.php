@@ -22,6 +22,7 @@ use App\Controllers\Front\CommentController as FrontCommentController;
 use App\Controllers\Back\CommentController as BackCommentController;
 use App\Controllers\Back\CommentReplyController as BackCommentReplyController;
 use App\Controllers\Back\ReviewController as BackReviewController;
+use App\Controllers\Front\PageController as FrontPageController;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RoleMiddleware;
 use App\Models\ForgotPassword;
@@ -111,7 +112,7 @@ $router->get('/admin/review/create', BackReviewController::class, 'create')->mid
 $router->get('/admin/review/show/{id}', BackReviewController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/review/edit/{id}', BackReviewController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
-
+$router->get('/{slug}', FrontPageController::class, 'index');
 /**
  * POST
  */
@@ -163,6 +164,9 @@ $router->post('/admin/review/update/{id}', BackReviewController::class, 'update'
 /**
  * DELETE
  */
+
+// $router->delete('/admin/post/delete/{id}', PostController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+// TODO Lotfi : Pour l'instant en get pour avancer
 
 $router->get('/admin/post/delete/{id}', PostController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/user/delete/{id}', UserController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);

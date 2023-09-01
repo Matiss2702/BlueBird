@@ -13,12 +13,12 @@
                 </div>
                 <div class="table-responsive">
                     <?php if ($pages) : ?>
-                        <table class="table">
+                        <table class="table display dataTable mt-4" id="page-list">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">ID</th>
                                     <th class="d-none d-sm-table-cell">Titre</th>
-                                    <th class="d-none d-sm-table-cell">Contenu</th>
+                                    <th class="d-none d-sm-table-cell">Slug</th>
                                     <th class="d-none d-sm-table-cell">Date de création</th>
                                     <th class="d-table-cell">Action</th>
                                 </tr>
@@ -28,7 +28,7 @@
                                 <tr>
                                     <td class="d-table-cell"><?= $page->id ?></td>
                                     <td class="d-none d-sm-table-cell"><?= $page->title ?></td>
-                                    <td class="d-none d-sm-table-cell"><?= $page->content ?></td>
+                                    <td class="d-none d-sm-table-cell"><a href="<?= $page->slug ?>" target="_blank"><?= $page->slug ?></a></td>
                                     <td class="d-none d-sm-table-cell"><?= date('Y-m-d H:i:s', strtotime($page->created_at)) ?></td>
                                     <td class="d-table-cell">
                                         <!-- Boutons d'action -->
@@ -39,6 +39,15 @@
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
+                            <tfoot class="thead-light">
+                                <tr>
+                                    <th class="d-table-cell">ID</th>
+                                    <th class="d-none d-sm-table-cell">Titre</th>
+                                    <th class="d-none d-sm-table-cell">Slug</th>
+                                    <th class="d-none d-sm-table-cell">Date de création</th>
+                                    <th class="d-table-cell">Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     <?php endif; ?>
                 </div>
