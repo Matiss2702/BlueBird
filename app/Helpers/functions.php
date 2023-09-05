@@ -1,6 +1,6 @@
 <?php
 
-function view(string $view, string $template, array $data = [], array $scripts = []): void
+function view(string $view, string $template, array $data = [], array $scripts = [], array $stylesheets = []): void
 {
     $viewInstance = new App\Core\View($view, $template);
     if ($template === 'front' || $template === 'account') {
@@ -11,6 +11,9 @@ function view(string $view, string $template, array $data = [], array $scripts =
     }
     foreach ($scripts as $script) {
         $viewInstance->addScript($script);
+    }
+    foreach ($stylesheets as $stylesheet) {
+        $viewInstance->addStylesheet($stylesheet);
     }
     $viewInstance->render();
 }

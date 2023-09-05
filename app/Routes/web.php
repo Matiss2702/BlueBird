@@ -21,6 +21,7 @@ use App\Controllers\Back\ProductorController AS BackProductorController;
 use App\Controllers\Front\CommentController as FrontCommentController;
 use App\Controllers\Back\CommentController as BackCommentController;
 use App\Controllers\Back\CommentReplyController as BackCommentReplyController;
+use App\Controllers\Back\ReviewController as BackReviewController;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RoleMiddleware;
 use App\Models\ForgotPassword;
@@ -105,6 +106,11 @@ $router->get('/admin/menu/create', BackMenuController::class, 'create')->middlew
 $router->get('/admin/menu/show/{id}', BackMenuController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/menu/edit/{id}', BackMenuController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
+$router->get('/admin/review/list', BackReviewController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/review/create', BackReviewController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/review/show/{id}', BackReviewController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/review/edit/{id}', BackReviewController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
 
 /**
  * POST
@@ -151,12 +157,12 @@ $router->post('/admin/user/update/{id}', UserController::class, 'update')->middl
 $router->post('/admin/menu/store', BackMenuController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/menu/update/{id}', BackMenuController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
+$router->post('/admin/review/store', BackReviewController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->post('/admin/review/update/{id}', BackReviewController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
 /**
  * DELETE
  */
-
-// $router->delete('/admin/post/delete/{id}', PostController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-// TODO Lotfi : Pour l'instant en get pour avancer
 
 $router->get('/admin/post/delete/{id}', PostController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/user/delete/{id}', UserController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
@@ -168,3 +174,4 @@ $router->get('/admin/productor/delete/{id}', BackProductorController::class, 'de
 $router->get('/admin/comment/delete/{id}', BackCommentController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/comment-reply/delete/{id}', BackCommentReplyController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/menu/delete/{id}', BackMenuController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/review/delete/{id}', BackReviewController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
