@@ -19,7 +19,7 @@ class ReviewController extends Controller
     public function listAction(): void
     {
         $reviews = QueryBuilder::table('review')
-            ->select('review.*', 'user.firstname', 'user.lastname', 'movie.title')
+            ->select(['review.*', 'user.firstname', 'user.lastname', 'movie.title'])
             ->join('user', function($join) {
                 $join->on('review.id_user', '=', 'user.id');
             })
@@ -76,7 +76,7 @@ class ReviewController extends Controller
     public function showAction($id): void
     {
         $review = QueryBuilder::table('review')
-            ->select('review.*', 'user.firstname', 'user.lastname', 'movie.title')
+            ->select(['review.*', 'user.firstname', 'user.lastname', 'movie.title'])
             ->join('user', function($join) {
                 $join->on('review.id_user', '=', 'user.id');
             })
@@ -105,7 +105,7 @@ class ReviewController extends Controller
         ];
 
         $review = QueryBuilder::table('review')
-            ->select('review.*', 'user.firstname', 'user.lastname', 'movie.title')
+            ->select(['review.*', 'user.firstname', 'user.lastname', 'movie.title'])
             ->join('user', function($join) {
                 $join->on('review.id_user', '=', 'user.id');
             })
