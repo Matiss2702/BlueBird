@@ -21,7 +21,6 @@ class MovieRequest extends FormRequest
             'description' => 'required|string|max:2000',
             'release_date' => 'required|date',
             'duration' => 'required|time',
-            'ids_category_movie' => 'required',
         ];
     }
 
@@ -37,7 +36,6 @@ class MovieRequest extends FormRequest
             'release_date.required' => 'La date de sortie est requise.',
             'release_date.string' => 'La date de sortie doit être une date.',
             'duration.required' => 'La durée est requise.',
-            'ids_category_movie.required' => 'Veuillez sélectionner au moins une catégorie.',
         ];
     }
 

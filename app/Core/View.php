@@ -8,6 +8,7 @@ class View {
     private String $template;
     private Array $data = [];
     private Array $scripts = [];
+    private Array $stylesheets = [];
 
     public function __construct(String $view, String $template = "back") {
         $this->setView($view);
@@ -24,12 +25,29 @@ class View {
         $this->templateData[$key] = $value;
     }
 
+    /**
+     * @param String $scriptPath
+     * @return void
+     */
     public function addScript(String $scriptPath): void
     {
         if (file_exists(__DIR__ . '/../../public' . $scriptPath)) {
             $this->scripts[] = $scriptPath;
         } else {
             die("La script ".$scriptPath." n'éxiste pas");
+        }
+    }
+
+    /**
+     * @param String $stylesheetPath
+     * @return void
+     */
+    public function addStylesheet(String $stylesheetPath): void
+    {
+        if (file_exists(__DIR__ . '/../../public' . $stylesheetPath)) {
+            $this->stylesheets[] = $stylesheetPath;
+        } else {
+            die("La feuille de style ".$stylesheetPath." n'existe pas");
         }
     }
 
@@ -41,7 +59,7 @@ class View {
     {
         $this->view = __DIR__ . "/../Views/$view.view.php";
         if (!file_exists($this->view)) {
-            die("La vue ".$this->view." n'éxiste pas");
+            die("La vue ".$this->view." n'existe pas");
         }
     }
 
@@ -53,7 +71,7 @@ class View {
     {
         $this->template = __DIR__ . "/../Views/$template.tpl.php";
         if (!file_exists($this->view)) {
-            die("Le template ".$this->view." n'éxiste pas");
+            die("Le template ".$this->view." n'existe pas");
         }
     }
     
@@ -62,7 +80,7 @@ class View {
         $file = __DIR__ . "/../Views/Partials/$name.partial.php";
 
         if (!file_exists($file)) {
-            die("Le partial ".$name." n'éxiste pas");
+            die("Le partial ".$name." n'existe pas");
         }
         extract($this->data);
         include __DIR__ . "/../Views/Partials/$name.partial.php";

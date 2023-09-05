@@ -43,14 +43,14 @@ class FormRequest extends AFormRequest
     private function validateField($field, $value, $rules): array
     {
         $fieldErrors = [];
-
         foreach (explode('|', $rules) as $rule) {
             $ruleParts = explode(':', $rule);
             $ruleName = $ruleParts[0];
             $ruleParams = isset($ruleParts[1]) ? explode(',', $ruleParts[1]) : [];
 
             switch ($ruleName) {
-                case 'required':                    $cleanedValue = strip_tags(html_entity_decode(trim($value)));
+                case 'required':
+                    $cleanedValue = strip_tags(html_entity_decode(trim($value)));
                     if (empty($cleanedValue)) {
                         $fieldErrors[] = 'Le champ ' . $field . ' est requis.';
                     }
