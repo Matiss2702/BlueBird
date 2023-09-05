@@ -5,6 +5,7 @@ namespace App\Requests;
 use App\Core\FormRequest;
 use App\Core\QueryBuilder;
 use App\Models\Page;
+use App\Models\Memento;
 
 class PageRequest extends FormRequest
 {
@@ -67,22 +68,29 @@ class PageRequest extends FormRequest
         $count = count($checkSlug);
 
         $page = new Page();
-
         $page->setTitle($validatedData['title']);
-
         if ($checkSlug) {
             $count = count($checkSlug);
             $slug = $slug.'-'.$count;
             $page->setSlug($slug);
-        }else{
+        } else {
             $page->setSlug($validatedData['slug']);
         }
-
         $page->setDescription($validatedData['description']);
         $page->setContent($validatedData['content']);
         $page->setCreatedAt(date('Y-m-d H:i:s'));
         $page->setUpdatedAt(date('Y-m-d H:i:s'));
-        $page->create();
+        $pageId = $page->create();
+        $page = Page::find($pageId);
+
+        $memento = new Memento();
+        $memento->setTitle($validatedData['title']);
+        $memento->setSlug($page->getSlug());
+        $memento->setDescription($validatedData['description']);
+        $memento->setContent($validatedData['content']);
+        $memento->setCreatedAt(date('Y-m-d H:i:s'));
+        $memento->setIdPage($page->getId());
+        $memento->create();
 
         return true;
     }
@@ -111,24 +119,31 @@ class PageRequest extends FormRequest
         ->where('slug', '=', '%'.$slug.'%')
         ->get();
 
-        $count = count($checkSlug);
-
-        $page = new Page();
+        if (!$page instanceof Page) {
+            $page = Page::find($page['id']);
+        }
 
         $page->setTitle($validatedData['title']);
-
         if ($checkSlug) {
             $count = count($checkSlug);
             $slug = $slug.'-'.$count;
             $page->setSlug($slug);
-        }else{
+        } else {
             $page->setSlug($validatedData['slug']);
         }
-
         $page->setDescription($validatedData['description']);
         $page->setContent($validatedData['content']);
         $page->setUpdatedAt(date('Y-m-d H:i:s'));
         $page->update();
+
+        $memento = new Memento();
+        $memento->setTitle($validatedData['title']);
+        $memento->setSlug($page->getSlug());
+        $memento->setDescription($validatedData['description']);
+        $memento->setContent($validatedData['content']);
+        $memento->setCreatedAt(date('Y-m-d H:i:s'));
+        $memento->setIdPage($page->getId());
+        $memento->create();
 
         return true;
     }

@@ -74,15 +74,23 @@ class PageController extends Controller{
     {
         $page = Page::find($id);
 
+        $versions = QueryBuilder::table('memento')
+            ->select('*')
+            ->where('id_page', $id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
         $scripts = [
             '/js/tinymce/editor.js',
+            '/js/memento.js',
         ];
 
         if (!$page)
             $this->redirectToList();
 
         view('page/back/edit', 'back', [
-            'page' => $page
+            'page' => $page,
+            'versions' => $versions
         ], $scripts);
     }
 
