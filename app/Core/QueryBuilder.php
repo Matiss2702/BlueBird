@@ -79,7 +79,6 @@ class QueryBuilder
     public function select($fields = [], $tableAliases = []): self
     {
         $prefixedFields = [];
-var_dump($fields);echo '<br>';
         foreach ($fields as $field) {
             $prefixedFields[] = $this->prefixColumnName($field);
         }
