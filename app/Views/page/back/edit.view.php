@@ -12,6 +12,17 @@
         <div class="w-75">
             <form action="/admin/page/update/<?= $page->getId() ?>" method="POST">
                 <div class="form-group">
+                    <label for="title">Préremplir à partir d'une version antérieure</label>
+                    <select id="versions" class="form-control">
+                        <option value="">Aucune</option>
+                        <?php foreach($versions as $version): ?>
+                            <option value="<?= $version['id'] ?>" data-version-data='<?= json_encode($version) ?>'>
+                                <?= $version['title'].' - '.date('d/m/Y H:i:s', strtotime($version['created_at'])) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="title">Titre</label>
                     <input type="text" id="title" name="title" class="form-control" value="<?= $old->title ?? $page->getTitle() ?>">
                     <?php if(isset($errors['title'])): ?>
