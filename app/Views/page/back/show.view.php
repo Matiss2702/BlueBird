@@ -16,8 +16,16 @@
                     <input type="text" id="title" name="title" class="form-control" value="<?= $page->getTitle() ?>" readonly>
                 </div>
                 <div class="form-group">
+                    <label for="slug">Slug</label>
+                    <input type="text" id="slug" name="slug" class="form-control" value="<?= $page->getSlug() ?>" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" name="description" class="form-control" value="<?= $page->getDescription() ?>" readonly>
+                </div>
+                <div class="form-group">
                     <label for="content">Contenu</label>
-                    <textarea id="content" name="content" class="form-control" readonly><?= $page->getContent() ?></textarea>
+                    <div class="form-control w-100 h-100" style="background-color: #eaecf4;opacity: 1;"><?= $page->getContent() ?></div>
                 </div>
             </form>
         </div>

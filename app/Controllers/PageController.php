@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\QueryBuilder;
 use App\Models\Page;
 use App\Requests\PageRequest;
 
@@ -14,25 +15,39 @@ class PageController extends Controller{
 
     public function listAction(): void
     {
+        $scripts = [
+            '/js/datatables/datatables.min.js',
+            '/js/datatables/index.js',
+            '/js/datatables/page-list.js',
+        ];
+
         view('page/back/list', 'back', [
             'pages' => Page::all()
-        ]);
+        ], $scripts);
     }
 
     public function createAction(): void
     {
-        view('page/back/create', 'back');
+        $scripts = [
+            '/js/tinymce/editor.js',
+        ];
+
+        view('page/back/create', 'back', [], $scripts);
     }
 
     public function storeAction(): void
     {
         $request = new PageRequest();
+        
+        $scripts = [
+            '/js/tinymce/editor.js',
+        ];
 
         if (!$request->createPage()) {
             view('page/back/create', 'back', [
                 'errors' => $request->getErrors(),
                 'old'    => $request->getOld()
-            ]);
+            ], $scripts);
         }
 
         $this->redirectToList();
@@ -42,28 +57,41 @@ class PageController extends Controller{
     {
         $page = Page::find($id);
 
+        $scripts = [
+            '/js/tinymce/editor.js',
+            '/js/page/create.js',
+        ];
+
         if (!$page)
             $this->redirectToList();
 
         view('page/back/show', 'back', [
             'page' => $page
-        ]);
+        ], $scripts);
     }
 
     public function editAction($id): void
     {
         $page = Page::find($id);
 
+        $scripts = [
+            '/js/tinymce/editor.js',
+        ];
+
         if (!$page)
             $this->redirectToList();
 
         view('page/back/edit', 'back', [
             'page' => $page
-        ]);
+        ], $scripts);
     }
 
     public function updateAction($id): void
     {
+        $scripts = [
+            '/js/tinymce/editor.js',
+        ];
+
         $page = Page::find($id);
 
         if (!$page) {
@@ -77,7 +105,7 @@ class PageController extends Controller{
                 'page'   => $page,
                 'errors' => $request->getErrors(),
                 'old'    => $request->getOld()
-            ]);
+            ], $scripts);
         }
 
         $this->redirectToList();

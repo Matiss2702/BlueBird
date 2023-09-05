@@ -26,7 +26,7 @@ class WebInfoSetupController extends Controller
         $fileName = 'website.config.php';
 
         file_put_contents($fileName, $fileContent);
-        chmod($fileName, 0666);
+        // chmod($fileName, 0666);
 
         header('Content-Type: application/json');
         echo json_encode(['success' => true]); // ou false en cas d'échec
