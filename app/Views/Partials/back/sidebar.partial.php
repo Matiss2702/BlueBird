@@ -48,6 +48,13 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/media/list">
+            <i class="fas fa-fw fa-camera"></i>
+            <span>Média</span>
+        </a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
