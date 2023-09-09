@@ -1,6 +1,6 @@
-<div id="content-wrapper">
+<div id="content-wrapper" class="container-fluid">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <?php $this->partial('movie/general'); ?>
             <?php $this->partial('movie/rating'); ?>
             <?php $this->partial('movie/comments'); ?>

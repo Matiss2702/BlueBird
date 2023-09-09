@@ -14,10 +14,11 @@ use App\Controllers\PageController;
 use App\Controllers\Front\ForgotPasswordController;
 use App\Controllers\Front\MessageController as FrontMessageController;
 use App\Controllers\Back\MessageController as BackMessageController;
-use App\Controllers\Front\MovieController AS FrontMovieController;
-use App\Controllers\Back\MovieController AS BackMovieController;
-use App\Controllers\Back\CategoryMovieController AS BackCategoryMovieController;
-use App\Controllers\Back\ProductorController AS BackProductorController;
+use App\Controllers\Front\MovieController as FrontMovieController;
+use App\Controllers\Back\MovieController as BackMovieController;
+use App\Controllers\Back\CategoryMovieController as BackCategoryMovieController;
+use App\Controllers\Front\CategoryMovieController as FrontCategoryMovieController;
+use App\Controllers\Back\ProductorController as BackProductorController;
 use App\Controllers\Front\CommentController as FrontCommentController;
 use App\Controllers\Back\CommentController as BackCommentController;
 use App\Controllers\Back\CommentReplyController as BackCommentReplyController;
@@ -34,7 +35,7 @@ $router = \App\Core\Router::getInstance();
  * GET
  */
 
-$router->get('/', MainController::class, 'home');
+$router->get('/', FrontPageController::class, 'index');
 
 $router->get('/account/profile', FrontAccountController::class, 'show')->middleware(AuthMiddleware::class);
 $router->get('/account/setting', FrontAccountController::class, 'edit')->middleware(AuthMiddleware::class);
@@ -48,8 +49,8 @@ $router->get('/login', AuthController::class, 'login');
 $router->get('/logout', AuthController::class, 'logout')->middleware(AuthMiddleware::class);
 $router->get('/register', AuthController::class, 'register');
 
-$router->get( '/forgot-password', ForgotPasswordController::class, 'index');
-$router->get( '/forgot-password/{token}', ForgotPasswordController::class, 'edit');
+$router->get('/forgot-password', ForgotPasswordController::class, 'index');
+$router->get('/forgot-password/{token}', ForgotPasswordController::class, 'edit');
 
 $router->get('/message', FrontMessageController::class, 'create');
 
@@ -90,7 +91,11 @@ $router->get('/admin/movie/create', BackMovieController::class, 'create')->middl
 $router->get('/admin/movie/edit/{id}', BackMovieController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/movie/show/{id}', BackMovieController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
-$router->get('/movie/show/{id}', FrontMovieController::class, 'show');
+$router->get('/movie/{movie_title}', FrontMovieController::class, 'show');
+$router->get('/movie', FrontMovieController::class, 'index');
+$router->get('/movie/q/{query}', FrontMovieController::class, 'query');
+
+$router->get('/category/{category_name}', FrontCategoryMovieController::class, 'show');
 
 $router->get('/admin/category-movie/list', BackCategoryMovieController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/category-movie/create', BackCategoryMovieController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);

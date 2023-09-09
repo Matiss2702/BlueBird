@@ -12,6 +12,10 @@
         <div class="w-75">
             <form>
                 <div class="form-group">
+                    <label for="content">Page d'accueil</label>
+                    <input type="text" id="is_home" name="is_home" class="form-control" value="<?= $page->getIsHome() ? 'Oui' : 'Non' ?>" readonly>
+                </div>
+                <div class="form-group">
                     <label for="title">Titre</label>
                     <input type="text" id="title" name="title" class="form-control" value="<?= $page->getTitle() ?>" readonly>
                 </div>

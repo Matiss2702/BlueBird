@@ -19,7 +19,7 @@ class MainController extends Controller
             $user = User::where("email", $email);
         }
 
-        view('Main/home', 'front', [
+        view('page/front/index', 'front', [
             'isConnected' => $isConnected,
             'user' => ($user !== null) ? $user->getFirstname() : null
         ]);

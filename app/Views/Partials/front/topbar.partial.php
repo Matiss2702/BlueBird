@@ -24,8 +24,7 @@
                             }
                         }
                         if ($menu->status == 1) {
-                            if ($hasChildMenu) :
-                    ?>
+                            if ($hasChildMenu) : ?>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle<?= $menu->id_parent == '' ? ' dropdown-closed' : '' ?>" href="<?= $menu->slug ?>" id="navbarDropdown<?= $menu->id ?>" role="button" <?= $hasChildMenu ? 'data-bs-toggle="dropdown" aria-expanded="false"' : '' ?>>
                                         <?= $menu->title ?>
@@ -49,7 +48,7 @@
                                         <?php endforeach; ?>
                                     </ul>
                                 </li>
-                                <?php else :
+                            <?php else :
                                 if ($menu->id_parent == '') :
                                 ?>
                                     <li class="nav-item">
@@ -90,96 +89,3 @@
         <?= $this->partial('profile') ?>
     </div>
 </nav>
-
-<style>
-    .navbar-brand {
-        font-size: 24px;
-    }
-
-    .nav-item {
-        position: relative;
-    }
-
-    .nav-link {
-        padding: 10px 15px;
-    }
-
-    .nav-link:hover {
-        background-color: #f8f9fa;
-    }
-
-    .dropdown-toggle::after {
-        content: none !important;
-    }
-
-    .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        z-index: 1000;
-        min-width: 200px;
-        padding: 0;
-        margin-top: 5px;
-        background-color: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        border-radius: 4px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .dropdown-menu.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-
-    .dropdown-item {
-        padding: 10px 20px;
-        color: #333333;
-        transition: background-color 0.3s ease;
-    }
-
-    .dropdown-item:hover {
-        background-color: #f8f9fa;
-    }
-
-    .dropdown-chevron::after {
-        content: "\25BE";
-        display: inline-block;
-        margin-left: 5px;
-        transform: rotate(-90deg);
-        transition: transform 0.3s ease;
-    }
-
-    .dropdown-toggle.dropdown-opened .dropdown-chevron::after {
-        transform: rotate(0deg);
-    }
-</style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dropdownMenus = document.querySelectorAll('.dropdown');
-
-        dropdownMenus.forEach((dropdownMenu) => {
-            const dropdownToggle = dropdownMenu.querySelector('.dropdown-toggle');
-            const dropdownMenuList = dropdownMenu.querySelector('.dropdown-menu');
-
-            dropdownToggle.addEventListener('click', (event) => {
-                event.preventDefault();
-                dropdownMenuList.classList.toggle('show');
-                dropdownToggle.classList.toggle('dropdown-opened');
-                dropdownToggle.classList.toggle('dropdown-closed');
-            });
-
-            document.addEventListener('click', (event) => {
-                if (!dropdownMenu.contains(event.target)) {
-                    dropdownMenuList.classList.remove('show');
-                    dropdownToggle.classList.remove('dropdown-opened');
-                    dropdownToggle.classList.add('dropdown-closed');
-                }
-            });
-        });
-    });
-</script>

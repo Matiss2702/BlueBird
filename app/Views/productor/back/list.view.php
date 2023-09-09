@@ -24,27 +24,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($productors as $productor): ?>
-                                <tr>
-                                    <td class="d-table-cell"><?= $productor['id']  ?? 'NULL' ?></td>
-                                    <td class="d-table-cell"><?= $productor['name'] ?? 'NULL' ?></td>
-                                    <td class="d-none d-sm-table-cell text-truncate" style="max-width:250px"><?=  $productor['description'] ?? 'NULL' ?></td>
-                                    <td class="d-none d-sm-table-cell"><?= $productor['iso'] ?? 'NULL' ?></td>
-                                    <td class="d-flex flex-column d-sm-table-cell">
-                                        <a href="/admin/productor/show/<?=  $productor['id'] ?>" class="btn btn-secondary btn-sm mb-2 mb-lg-auto">
-                                            <i class="fa fa-eye"></i>
-                                            <span class="sr-only">Cliquer pour voir : <?=$productor["name"]?></span>
-                                        </a>
-                                        <a href="/admin/productor/edit/<?=  $productor['id'] ?>" class="btn btn-primary btn-sm mb-2 mb-lg-auto">
-                                            <i class="fa fa-edit"></i>
-                                            <span class="sr-only">Cliquer pour modifier : <?=$productor["name"]?></span>
-                                        </a>
-                                        <a href="/admin/productor/delete/<?=  $productor['id'] ?>" class="btn btn-danger btn-sm mb-2 mb-lg-auto">
-                                            <i class="fa fa-trash"></i>
-                                            <span class="sr-only">Cliquer pour supprimer : <?=$productor["name"]?></span>
-                                        </a>
-                                    </td>
-                                </tr>
+                                <?php foreach ($productors as $productor) : ?>
+                                    <tr>
+                                        <td class="d-table-cell"><?= $productor['id_productor']  ?? 'NULL' ?></td>
+                                        <td class="d-table-cell"><?= $productor['productor_name'] ?? 'NULL' ?></td>
+                                        <td class="d-none d-sm-table-cell text-truncate" style="max-width:250px"><?= $productor['description'] ?? 'NULL' ?></td>
+                                        <td class="d-none d-sm-table-cell"><?= $productor['iso'] ?? 'NULL' ?></td>
+                                        <td class="d-flex flex-column d-sm-table-cell">
+                                            <a href="/admin/productor/show/<?= $productor['id_productor'] ?>" class="btn btn-secondary btn-sm mb-2 mb-lg-auto">
+                                                <i class="fa fa-eye"></i>
+                                                <span class="sr-only">Cliquer pour voir : <?= $productor["name"] ?></span>
+                                            </a>
+                                            <a href="/admin/productor/edit/<?= $productor['id_productor'] ?>" class="btn btn-primary btn-sm mb-2 mb-lg-auto">
+                                                <i class="fa fa-edit"></i>
+                                                <span class="sr-only">Cliquer pour modifier : <?= $productor["name"] ?></span>
+                                            </a>
+                                            <a href="/admin/productor/delete/<?= $productor['id_productor'] ?>" class="btn btn-danger btn-sm mb-2 mb-lg-auto">
+                                                <i class="fa fa-trash"></i>
+                                                <span class="sr-only">Cliquer pour supprimer : <?= $productor["name"] ?></span>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
                             </tbody>
                             <tfoot>

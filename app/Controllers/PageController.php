@@ -6,7 +6,8 @@ use App\Core\QueryBuilder;
 use App\Models\Page;
 use App\Requests\PageRequest;
 
-class PageController extends Controller{
+class PageController extends Controller
+{
 
     public function __construct()
     {
@@ -30,6 +31,7 @@ class PageController extends Controller{
     {
         $scripts = [
             '/js/tinymce/editor.js',
+            '/js/page.js',
         ];
 
         view('page/back/create', 'back', [], $scripts);
@@ -38,7 +40,7 @@ class PageController extends Controller{
     public function storeAction(): void
     {
         $request = new PageRequest();
-        
+
         $scripts = [
             '/js/tinymce/editor.js',
         ];
@@ -83,6 +85,7 @@ class PageController extends Controller{
         $scripts = [
             '/js/tinymce/editor.js',
             '/js/memento.js',
+            '/js/page.js',
         ];
 
         if (!$page)

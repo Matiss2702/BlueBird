@@ -8,6 +8,7 @@ use App\Models\Movie;
 use App\Models\CategoryMovie;
 use App\Models\Comment;
 use App\Models\CommentReply;
+use DateTime;
 
 class MovieController extends Controller
 {
@@ -16,24 +17,154 @@ class MovieController extends Controller
         parent::__construct();
     }
 
-    public function showAction($id): void
+    //tous les films de base
+    // /movie
+    public function indexAction(): void
     {
-        $movie = Movie::find($id);
+        $movies = Movie::all();
+
+        $categoriesMovie = QueryBuilder::table('category_movie')
+            ->select()
+            ->orderBy('category_movie.name', 'asc')
+            ->get();
+
+        // $CategoriesMovie = QueryBuilder::table('category_movie')
+        //     ->select(
+        //         [
+        //             'category_movie.name',
+        //             'COUNT(movie_category_movie.id_category_movie) AS appearance'
+        //         ]
+        //     )
+        //     ->leftJoin('movie_category_movie', function($join) {
+        //         $join->on('category_movie.id', '=', 'movie_category_movie.id_category_movie'); 
+        //     })
+        //     ->groupBy('category_movie.name')
+        //     ->orderBy('category_movie.name', 'asc')
+        //     ->get();
+
+        view('movie/front/index', 'front', [
+            'movies' => $movies,
+            'categoriesMovie' => $categoriesMovie, 
+        ]);
+    }
+
+    public function queryAction($query) : void 
+    {
+        $params = $_GET;
+
+        $movies = Movie::all();
+        
+        $categoriesMovie = QueryBuilder::table('category_movie')
+        ->select()
+        ->orderBy('category_movie.name', 'asc')
+        ->get();
+
+        if (isset($params['category_movie'])) {
+            $categoryMovie = $_GET['category_movie'];
+            $categoryMovie = ucfirst(strtolower($categoryMovie));
+
+            $categoriesMovieFiltered = QueryBuilder::table('movie')
+                ->select([
+                    'movie.title'
+                ])
+                ->join('movie_category_movie', function($join) {
+                    $join->on('movie.id', '=', 'movie_category_movie.id_movie');
+                })
+                ->join('category_movie', function($join) {
+                    $join->on('movie_category_movie.id_category_movie', '=', 'category_movie.id');
+                })
+                ->where('category_movie.name', 'ILIKE', '%'.$categoryMovie.'%')
+                ->get();
+        } 
+        
+        if (isset($_GET['movie_name'])) {
+            $movie = $_GET['movie_name'];
+            $movie = strtolower($movie);
+
+            $moviesFiltered = QueryBuilder::table('movie')
+            ->select()
+            ->where("movie.title", 'ILIKE', '%'.$movie.'%')
+            ->get();        
+        }
+
+        if (!$query)
+            redirectHome();
+
+        view('movie/front/index', 'front', [
+            'movies' => $movies,
+            'moviesFiltered' => $moviesFiltered,
+            'categoriesMovie' => $categoriesMovie, 
+            'categoriesMovieFilted' => $categoriesMovieFiltered, 
+        ]);
+    }
+
+
+    //la page d'un film 
+    // /movie/fast-and-furious-8 par exemple
+    public function showAction($movie_title): void
+    {
+        $movie_title = str_replace(array('%20', '-', '_'), ' ', $movie_title);
+        $movie_title = strtolower($movie_title);
+        $movie_title = ucfirst($movie_title);
+
+        $movie = QueryBuilder::table('movie')
+            ->select()
+            ->where('title', 'LIKE', '%'.$movie_title.'%')
+            ->first();
+
+        $movie_id = $movie['id'];
+
         if (!$movie)
             redirectHome();
 
+        $movie_duration = $movie['duration'];
+        $heures = floor($movie_duration / 60);
+        $minutes = $movie_duration % 60;
+        $movie_duration = sprintf('%02d:%02d', $heures, $minutes);
+
+        $release_date = $movie['release_date'];
+        $date = new DateTime($release_date);
+
+        $mois_en_francais = [
+            1 => 'janvier',
+            2 => 'février',
+            3 => 'mars',
+            4 => 'avril',
+            5 => 'mai',
+            6 => 'juin',
+            7 => 'juillet',
+            8 => 'août',
+            9 => 'septembre',
+            10 => 'octobre',
+            11 => 'novembre',
+            12 => 'décembre',
+        ];
+        
+        $jour = $date->format('d');
+        $mois = $mois_en_francais[intval($date->format('m'))];
+        $annee = $date->format('Y');
+        
+        $release_date = $jour . ' ' . $mois . ' ' . $annee;
+
+
         $movieCategoriesMovie = QueryBuilder::table('movie_category_movie')
             ->select()
-            ->where('id_movie', $id)
+            ->where('id_movie', $movie_id)
             ->get();
         $movieCategoriesMovie = array_values(array_column($movieCategoriesMovie, 'id_category_movie'));
 
-        $comments = $this->getCommentsByIdMovie($id);
+        $comments = $this->getCommentsByIdMovie($movie_id);
 
         $userId = QueryBuilder::table('user')
             ->select(['id'])
             ->where('email', $_SESSION['user_token'] ?? '')
             ->getColumn('id');
+
+        $title = $movie['title'];
+        $title = 'BlueBird - '. $title;
+
+        $description = $movie['description'];
+        $description = 'Review du film : ' . $title . ' par BlueBird. ' . $description;
 
         view('movie/front/show', 'front', [
             'movie' => $movie,
@@ -41,7 +172,11 @@ class MovieController extends Controller
             'categoriesMovie' => CategoryMovie::all(),
             'isConnected' => isConnected(),
             'idUser' => $userId,
-            'comments' => $comments
+            'comments' => $comments,
+            'movie_duration' => $movie_duration,
+            'release_date' => $release_date,
+            'title' => $title,
+            'description' => $description,
         ]);
     }
 
@@ -109,5 +244,11 @@ class MovieController extends Controller
         }
 
         return $comments;
+    }
+
+    private function redirectToList(): void
+    {
+        header('Location: /movie');
+        exit();
     }
 }
