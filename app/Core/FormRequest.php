@@ -57,7 +57,7 @@ class FormRequest extends AFormRequest
                     break;
 
                 case 'string':
-                    if (!is_string($value)) {                        
+                    if (!is_string($value)) {
                         $fieldErrors[] = 'Le champ ' . $field . ' doit être une chaîne de caractère.';
                     }
                     break;

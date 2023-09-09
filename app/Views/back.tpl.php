@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/css/datatables/datatables.min.css">
     <!-- Inclusion des scripts nécéssaires -->
     <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- TinyMCE -->
     <script src="https://cdn.tiny.cloud/1/chkwzjujlbt5or0j9fb6826oee76gp65q4h5v057pajzzay6/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>

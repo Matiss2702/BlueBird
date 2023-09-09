@@ -6832,3 +6832,8 @@ html {
     }
   }
   /*# sourceMappingURL=bootstrap.css.map */
+
+img {
+  max-height: 100% !important;
+  max-width: 100% !important;
+}

@@ -127,7 +127,7 @@ class MediaRequest extends FormRequest
         $currentDate = date('Y/m/d');
         $fullUploadDir = $uploadDir . $currentDate . '/';
         if (!file_exists($fullUploadDir)) {
-            mkdir($fullUploadDir, 0777, true); 
+            mkdir($fullUploadDir, 0777, true);
         }
         
         $fileNameDef = ltrim($fileNameDef, '/');
@@ -137,6 +137,5 @@ class MediaRequest extends FormRequest
         if (move_uploaded_file($file['tmp_name'], $fullFilePath)) {
             return true;
         }
-
     }
 }
