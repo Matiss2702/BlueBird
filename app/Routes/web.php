@@ -119,7 +119,7 @@ $router->get('/admin/review/create', BackReviewController::class, 'create')->mid
 $router->get('/admin/review/show/{id}', BackReviewController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/review/edit/{id}', BackReviewController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
-$router->get('/{slug}', FrontPageController::class, 'index');
+$router->get('/{slug}', FrontPageController::class, 'page');
 
 $router->get('/admin/media/list', BackMediaController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/media/create', BackMediaController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
