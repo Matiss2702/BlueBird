@@ -23,6 +23,7 @@ use App\Controllers\Back\CommentController as BackCommentController;
 use App\Controllers\Back\CommentReplyController as BackCommentReplyController;
 use App\Controllers\Back\ReviewController as BackReviewController;
 use App\Controllers\Front\PageController as FrontPageController;
+use App\Controllers\Back\MediaController as BackMediaController;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RoleMiddleware;
 use App\Models\ForgotPassword;
@@ -113,6 +114,12 @@ $router->get('/admin/review/show/{id}', BackReviewController::class, 'show')->mi
 $router->get('/admin/review/edit/{id}', BackReviewController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
 $router->get('/{slug}', FrontPageController::class, 'index');
+
+$router->get('/admin/media/list', BackMediaController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/media/create', BackMediaController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/media/show/{id}', BackMediaController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/media/edit/{id}', BackMediaController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
 /**
  * POST
  */
@@ -161,6 +168,9 @@ $router->post('/admin/menu/update/{id}', BackMenuController::class, 'update')->m
 $router->post('/admin/review/store', BackReviewController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/review/update/{id}', BackReviewController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
+$router->post('/admin/media/store', BackMediaController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->post('/admin/media/update/{id}', BackMediaController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
 /**
  * DELETE
  */
@@ -179,3 +189,4 @@ $router->get('/admin/comment/delete/{id}', BackCommentController::class, 'delete
 $router->get('/admin/comment-reply/delete/{id}', BackCommentReplyController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/menu/delete/{id}', BackMenuController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/review/delete/{id}', BackReviewController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/media/delete/{id}', BackMediaController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);

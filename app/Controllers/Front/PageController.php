@@ -33,11 +33,17 @@ class PageController extends Controller
         $title = WEBSITE_TITLE .' - '. $page->getTitle();
         $description = $page->getDescription();
         
+        $stylesheets = [
+            '/vendor/bootstrap/all.css',
+        ];
+
+        $scripts = [];
+
         view('page/front/index', 'front', [
                 'page' => $page,
                 'title' => $title,
                 'description' => $description
-            ]
+        ], $scripts, $stylesheets
         );
     }
 }

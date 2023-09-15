@@ -58,7 +58,7 @@ class FormRequest extends AFormRequest
 
                 case 'string':
                     if (!is_string($value)) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' doit être une chaîne de caractères.';
+                        $fieldErrors[] = 'Le champ ' . $field . ' doit être une chaîne de caractère.';
                     }
                     break;
 
@@ -126,6 +126,26 @@ class FormRequest extends AFormRequest
                     if (!empty($value)) {
                         if (!$this->isValueUnique($table, $field, $value)) {
                             $fieldErrors[] = 'La valeur du champ ' . $field . ' est déjà utilisée par un autre menu !';
+                        }
+                    }
+                    break;
+
+                case 'file-type':
+                    $allowedFileType = $ruleParts;
+                    if (isset($_FILES[$field])) {
+                        $fileType = pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION);
+                        if (!in_array($fileType, $allowedFileType)) {
+                            $fieldErrors[] = 'Votre fichier n\'est pas supporté';
+                        }
+                    }
+                    break;
+                
+                case 'file-size':
+                    $allowedSize = $ruleParams[0];
+                    if (isset($_FILES[$field])) {
+                        $fileSize = $_FILES[$field]['size'];
+                        if ($fileSize > $allowedSize) {
+                            $fieldErrors[] = 'Votre fichier est trop lourd';
                         }
                     }
                     break;
