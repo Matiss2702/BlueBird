@@ -91,9 +91,9 @@ $router->get('/admin/movie/create', BackMovieController::class, 'create')->middl
 $router->get('/admin/movie/edit/{id}', BackMovieController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/movie/show/{id}', BackMovieController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
-$router->get('/movie/{movie_title}', FrontMovieController::class, 'show');
 $router->get('/movie', FrontMovieController::class, 'index');
 $router->get('/movie/q/{query}', FrontMovieController::class, 'query');
+$router->get('/movie/{movie_title}', FrontMovieController::class, 'show');
 
 $router->get('/category/{category_name}', FrontCategoryMovieController::class, 'show');
 

@@ -87,9 +87,9 @@ class Movie extends Model
         $this->updated_at = $updated_at;
     }
 
-    public static function durationToMinutes($duration): string
+    public static function durationToMinutes($duration, $separator = ':'): string
     {
-        $durationParts = explode(':', $duration);
+        $durationParts = explode($separator, $duration);
         $hoursInMinutes = intval($durationParts[0]) * 60;
         $minutes = intval($durationParts[1]);
         $durationInMinutes = $hoursInMinutes + $minutes;
@@ -97,12 +97,12 @@ class Movie extends Model
         return $durationInMinutes;
     }
 
-    public static function minutesToDuration($minutes): string
+    public static function minutesToDuration($minutes, $separator = ':'): string
     {
         $hours = intval($minutes / 60);
         $remainingMinutes = $minutes % 60;
         $durationParts = [$hours, $remainingMinutes];
 
-        return implode(':', $durationParts);
+        return implode($separator, $durationParts);
     }
 }
