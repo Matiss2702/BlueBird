@@ -12,6 +12,21 @@
         <div class="w-100">
             <form action="/admin/movie/store" method="POST">
                 <div class="form-group">
+                    <label for="id_media">Poster</label>
+                    <select name="id_media" id="id_media" class="form-control" required>
+                        <?php foreach($medias as $media): ?>
+                            <option value="<?= $media['id'] ?>">
+                                <?= $media['name'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php if(isset($errors['id_media'])): ?>
+                        <?php foreach($errors['id_media'] as $error): ?>
+                            <div class="text-danger"><?= $error; ?></div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" id="title" name="title" class="form-control" value="<?= $old->title ?? '' ?>" required>
                     <?php if(isset($errors['title'])): ?>

@@ -21,6 +21,7 @@ class MovieRequest extends FormRequest
             'description' => 'required|string|max:2000',
             'release_date' => 'required|date',
             'duration' => 'required|time',
+            'id_media' => 'required|integer',
         ];
     }
 
@@ -36,6 +37,8 @@ class MovieRequest extends FormRequest
             'release_date.required' => 'La date de sortie est requise.',
             'release_date.string' => 'La date de sortie doit être une date.',
             'duration.required' => 'La durée est requise.',
+            'id_media.required' => 'Le poster est requis.',
+            'id_media.integer' => 'Le poster doit être un entier.',
         ];
     }
 
@@ -54,6 +57,7 @@ class MovieRequest extends FormRequest
         $movie->setDescription($validatedData['description']);
         $movie->setReleaseDate($validatedData['release_date']);
         $movie->setDuration($duration);
+        $movie->setIdMedia($validatedData['id_media']);
         $movie->setCreatedAt(date("Y-m-d H:i:s")); // TODO : a retirer et mettre CURRENT_TIMESTAMP en BD
         $movie->setUpdatedAt(date("Y-m-d H:i:s")); // TODO : a retirer et mettre CURRENT_TIMESTAMP en BD
         $id_movie = $movie->create();
@@ -89,6 +93,7 @@ class MovieRequest extends FormRequest
         $movie->setDescription($validatedData['description']);
         $movie->setReleaseDate($validatedData['release_date']);
         $movie->setDuration($duration);
+        $movie->setIdMedia($validatedData['id_media']);
         $movie->setUpdatedAt(date('Y-m-d H:i:s'));
         $movie->update();
 
