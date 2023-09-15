@@ -137,5 +137,7 @@ class MediaRequest extends FormRequest
         if (move_uploaded_file($file['tmp_name'], $fullFilePath)) {
             return true;
         }
+
+        return false;
     }
 }

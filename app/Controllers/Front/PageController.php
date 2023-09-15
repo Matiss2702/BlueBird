@@ -14,7 +14,7 @@ class PageController extends Controller
         parent::__construct();
     }
 
-    public function indexAction($slug): void
+    public function pageAction($slug): void
     {
         $title = WEBSITE_TITLE;
         $description = WEBSITE_DESCRIPTION;
@@ -44,6 +44,25 @@ class PageController extends Controller
                 'title' => $title,
                 'description' => $description
         ], $scripts, $stylesheets
+        );
+    }
+
+    public function indexAction(): void
+    {
+        $title = WEBSITE_TITLE;
+        $description = WEBSITE_DESCRIPTION;
+
+        $slug = '/';
+        $page = Page::where("slug", $slug);
+
+        $title = WEBSITE_TITLE .' - '. $page->getTitle();
+        $description = $page->getDescription();
+
+        view('page/front/index', 'front', [
+                'title' => $title,
+                'page' => $page,
+                'description' => $description
+            ]
         );
     }
 }

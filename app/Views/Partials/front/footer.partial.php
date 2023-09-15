@@ -5,7 +5,7 @@
                 <ul class="footer-menu">
                     <?php
                     $footerMenus = array_filter($menus, function ($menu) {
-                        return $menu->zone == 2;
+                        return $menu->zone == 2 && $menu->status == 1;;
                     });
                     $orderedMenus = array_column($footerMenus, null, 'orders');
                     ksort($orderedMenus);

@@ -10,8 +10,11 @@
     <meta name="description" content="<?= $description ?? WEBSITE_DESCRIPTION ?>">
     <!-- Inclusion des assets -->
     <?php $this->partial('assets'); ?>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <!-- Inclusion des scripts nécéssaires -->
+    <script src="/js/bluebird/app.js"></script>
     <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 

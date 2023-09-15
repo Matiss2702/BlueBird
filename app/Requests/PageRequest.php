@@ -17,6 +17,7 @@ class PageRequest extends FormRequest
     protected function rules(): array
     {
         return [
+            'is_home' => 'in:0,1',
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
             'description' => 'required|string|max:60',
@@ -53,7 +54,7 @@ class PageRequest extends FormRequest
 
         if (substr($slug, 0, 1) !== '/') {
             $slug = '/' . $slug;
-        }        
+        }
 
         if (substr_count($slug, '/') >= 2) {
             $error = 'Veuillez Recommencer';
@@ -61,21 +62,44 @@ class PageRequest extends FormRequest
         }
 
         $checkSlug = QueryBuilder::table('page')
-        ->select('COUNT(slug)')
-        ->where('slug', '=', '%'.$slug.'%')
-        ->get();
+            ->select(['*'])
+            ->where('slug', 'LIKE', '%' . $slug . '%')
+            ->get();
 
         $count = count($checkSlug);
 
+        if ($validatedData['is_home'] == '1') self::removeCurrentHome();
+
         $page = new Page();
-        $page->setTitle($validatedData['title']);
+
+        $title = $validatedData['title'];
+        $page->setIsHome($validatedData['is_home']);
+
+        $title = $validatedData['title'];
+        $count = count($checkSlug);
+
         if ($checkSlug) {
-            $count = count($checkSlug);
-            $slug = $slug.'-'.$count;
-            $page->setSlug($slug);
+            if ($checkSlug) {
+                if ($slug == "/") {
+                    $title = $title . " " . $count + 1;
+                    $slug = "/";
+                    $page->setTitle($title);
+                    $page->setSlug($slug);
+                } else {
+                    $title = $title . " " . $count + 1;
+                    $slug = "/" . $title;
+                    $page->setTitle($title);
+                    $page->setSlug($slug);
+                }
+            } else {
+                $page->setTitle($validatedData['title']);
+                $page->setSlug($validatedData['slug']);
+            }
         } else {
+            $page->setTitle($validatedData['title']);
             $page->setSlug($validatedData['slug']);
         }
+
         $page->setDescription($validatedData['description']);
         $page->setContent($validatedData['content']);
         $page->setCreatedAt(date('Y-m-d H:i:s'));
@@ -107,7 +131,7 @@ class PageRequest extends FormRequest
 
         if (substr($slug, 0, 1) !== '/') {
             $slug = '/' . $slug;
-        }        
+        }
 
         if (substr_count($slug, '/') >= 2) {
             $error = 'Veuillez Recommencer';
@@ -115,22 +139,43 @@ class PageRequest extends FormRequest
         }
 
         $checkSlug = QueryBuilder::table('page')
-        ->select('COUNT(slug)')
-        ->where('slug', '=', '%'.$slug.'%')
-        ->get();
+            ->select(['*'])
+            ->where('slug', 'LIKE', '%' . $slug . '%')
+            ->get();
 
         if (!$page instanceof Page) {
             $page = Page::find($page['id']);
         }
 
-        $page->setTitle($validatedData['title']);
+        if ($validatedData['is_home'] == '1') self::removeCurrentHome();
+
+        $page->setIsHome($validatedData['is_home']);
+
+        $title = $validatedData['title'];
+        $count = count($checkSlug);
+
         if ($checkSlug) {
-            $count = count($checkSlug);
-            $slug = $slug.'-'.$count;
-            $page->setSlug($slug);
+            if ($checkSlug) {
+                if ($slug == "/") {
+                    $title = $title . " " . $count + 1;
+                    $slug = "/";
+                    $page->setTitle($title);
+                    $page->setSlug($slug);
+                } else {
+                    $title = $title . " " . $count + 1;
+                    $slug = "/" . $title;
+                    $page->setTitle($title);
+                    $page->setSlug($slug);
+                }
+            } else {
+                $page->setTitle($validatedData['title']);
+                $page->setSlug($validatedData['slug']);
+            }
         } else {
+            $page->setTitle($validatedData['title']);
             $page->setSlug($validatedData['slug']);
         }
+
         $page->setDescription($validatedData['description']);
         $page->setContent($validatedData['content']);
         $page->setUpdatedAt(date('Y-m-d H:i:s'));
@@ -146,5 +191,19 @@ class PageRequest extends FormRequest
         $memento->create();
 
         return true;
+    }
+
+    public function removeCurrentHome()
+    {
+        $currentHomePage = QueryBuilder::table('page')
+            ->select('id')
+            ->where('is_home', '=', 1)
+            ->get();
+
+        if ($currentHomePage) {
+            $currentHomePage = Page::find($currentHomePage[0]['id']);
+            $currentHomePage->setIsHome(0);
+            $currentHomePage->update();
+        }
     }
 }

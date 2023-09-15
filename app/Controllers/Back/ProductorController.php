@@ -25,11 +25,13 @@ class ProductorController extends Controller
         ];
 
         $productors = QueryBuilder::table('productor')
-            ->select(
+            ->select([
                 'productor.*',
+                'productor.id AS id_productor',
+                'productor.name AS productor_name',
                 'country.iso',
-            )
-            ->join('country', function($join) {
+            ])
+            ->join('country', function ($join) {
                 $join->on('productor.id_country', '=', 'country.id');
             })
             ->orderBy('productor.name')
@@ -68,13 +70,14 @@ class ProductorController extends Controller
     public function showAction($id): void
     {
         $productor = QueryBuilder::table('productor')
-            ->select(
+            ->select([
+                'productor.*',
                 'productor.id AS id_productor',
                 'productor.name AS productor_name',
-                'productor.*',
                 'country.*',
-            )
-            ->join('country', function($join) {
+                'country.id as id_country'
+            ])
+            ->join('country', function ($join) {
                 $join->on('productor.id_country', '=', 'country.id');
             })
             ->where('productor.id', $id)
@@ -94,7 +97,7 @@ class ProductorController extends Controller
         $countries = Country::all();
 
         if (!$productor)
-            $this->redirectToList();    
+            $this->redirectToList();
 
         view('productor/back/edit', 'back', [
             'productor' => $productor,
