@@ -126,7 +126,7 @@ class PageController extends Controller
     {
         $page = Page::find($id);
 
-        if ($page) {
+        if ($page && !$page->getIsHome()) {
             $page->delete();
         }
 

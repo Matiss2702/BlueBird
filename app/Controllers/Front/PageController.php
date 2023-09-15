@@ -32,19 +32,12 @@ class PageController extends Controller
 
         $title = WEBSITE_TITLE .' - '. $page->getTitle();
         $description = $page->getDescription();
-        
-        $stylesheets = [
-            '/vendor/bootstrap/all.css',
-        ];
 
-        $scripts = [];
-
-        view('page/front/index', 'front', [
-                'page' => $page,
-                'title' => $title,
-                'description' => $description
-        ], $scripts, $stylesheets
-        );
+        view('page/front/page', 'front', [
+            'page' => $page,
+            'title' => $title,
+            'description' => $description
+        ]);
     }
 
     public function indexAction(): void
@@ -59,10 +52,9 @@ class PageController extends Controller
         $description = $page->getDescription();
 
         view('page/front/index', 'front', [
-                'title' => $title,
-                'page' => $page,
-                'description' => $description
-            ]
-        );
+            'title' => $title,
+            'page' => $page,
+            'description' => $description
+        ]);
     }
 }

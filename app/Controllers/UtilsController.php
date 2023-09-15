@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\Movie;
 
 class UtilsController extends Controller
 {
@@ -29,8 +30,14 @@ class UtilsController extends Controller
         $pagesSlugs = array_column($pages, 'slug');
         $posts = Post::all();
         $postsSlugs = array_column($posts, 'slug');
+        $movies = Movie::all();
+        $moviesSlugs = array_column($movies, 'title');
 
-        $locs = array_merge($staticPages, $pagesSlugs, $postsSlugs);
+        foreach ($moviesSlugs as $key => $movieSlug) {
+            $moviesSlugs[$key] = 'movie/' . $movieSlug;
+        }
+
+        $locs = array_merge($staticPages, $pagesSlugs, $postsSlugs, $moviesSlugs);
 
         $websiteUrl = $_SERVER['HTTP_HOST'];
         $rootPath = $_SERVER['DOCUMENT_ROOT'];
@@ -42,7 +49,7 @@ class UtilsController extends Controller
         $xmlContent .= '<url>' . "\n";
 
         foreach ($locs as $loc) {
-            $xmlContent .= '<loc>' . $websiteUrl . '/' . $loc . '</loc>' . "\n";
+            $xmlContent .= '<loc>' . $websiteUrl . '/' . strtolower(str_replace(' ', '-', $loc)) . '</loc>' . "\n";
         }
 
         $xmlContent .= '</url>' . "\n";

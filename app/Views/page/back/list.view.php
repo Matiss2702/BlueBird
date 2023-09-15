@@ -34,7 +34,9 @@
                                             <!-- Boutons d'action -->
                                             <a href="/admin/page/show/<?= $page->id ?>" class="btn btn-secondary btn-sm"><i class="fa fa-eye"></i></a>
                                             <a href="/admin/page/edit/<?= $page->id ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                            <a href="/admin/page/delete/<?= $page->id ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                            <?php if (!$page->is_home) : ?>
+                                                <a href="/admin/page/delete/<?= $page->id ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
