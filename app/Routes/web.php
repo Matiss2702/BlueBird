@@ -95,6 +95,7 @@ $router->get('/movie', FrontMovieController::class, 'index');
 $router->get('/movie/q/{query}', FrontMovieController::class, 'query');
 $router->get('/movie/{movie_title}', FrontMovieController::class, 'show');
 
+$router->get('/category', FrontCategoryMovieController::class, 'index');
 $router->get('/category/{category_name}', FrontCategoryMovieController::class, 'show');
 
 $router->get('/admin/category-movie/list', BackCategoryMovieController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);

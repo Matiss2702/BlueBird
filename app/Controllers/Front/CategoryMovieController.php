@@ -5,7 +5,6 @@ namespace App\Controllers\Front;
 use App\Controllers\Controller;
 use App\Controllers\Front\MovieController;
 use App\Core\QueryBuilder;
-use App\Models\Movie;
 use App\Models\CategoryMovie;
 
 class CategoryMovieController extends Controller
@@ -13,6 +12,15 @@ class CategoryMovieController extends Controller
     public function __construct()
     {
         parent::__construct();
+    }
+
+    public function indexAction(): void
+    {
+        $categories = CategoryMovie::all();
+
+        view('category-movie/front/index', 'front', [
+            'categories' => $categories
+        ]);
     }
 
     public function showAction($category_name): void
