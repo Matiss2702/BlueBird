@@ -21,38 +21,50 @@ class MovieController extends Controller
     // /movie
     public function indexAction(): void
     {
-        $movies = Movie::all();
+        $movies = QueryBuilder::table('movie')
+            ->select(['movie.*', 'media.slug', 'media.alt', 'category_movie.name as category_name'])
+            ->join('media', function($join) {
+                $join->on('media.id', '=', 'movie.id_media');
+            })
+            ->join('movie_category_movie', function($join) {
+                $join->on('movie_category_movie.id_movie', '=', 'movie.id');
+            })
+            ->join('category_movie', function($join) {
+                $join->on('movie_category_movie.id_category_movie', '=', 'category_movie.id');
+            })
+            ->orderBy('movie.title', 'asc')
+            ->get();
 
         $categoriesMovie = QueryBuilder::table('category_movie')
             ->select()
             ->orderBy('category_movie.name', 'asc')
             ->get();
 
-        // $CategoriesMovie = QueryBuilder::table('category_movie')
-        //     ->select(
-        //         [
-        //             'category_movie.name',
-        //             'COUNT(movie_category_movie.id_category_movie) AS appearance'
-        //         ]
-        //     )
-        //     ->leftJoin('movie_category_movie', function($join) {
-        //         $join->on('category_movie.id', '=', 'movie_category_movie.id_category_movie'); 
-        //     })
-        //     ->groupBy('category_movie.name')
-        //     ->orderBy('category_movie.name', 'asc')
-        //     ->get();
-
         view('movie/front/index', 'front', [
-            'movies' => $movies,
+            'movies' => self::groupMovies($movies),
             'categoriesMovie' => $categoriesMovie, 
-        ]);
+        ], [], ['/css/back/movie.css']);
     }
 
     public function queryAction($query) : void 
     {
         $params = $_GET;
 
-        $movies = Movie::all();
+        $movies = QueryBuilder::table('movie')
+            ->select(['movie.*', 'media.slug', 'media.alt', 'category_movie.name as category_name'])
+            ->join('media', function($join) {
+                $join->on('media.id', '=', 'movie.id_media');
+            })
+            ->join('movie_category_movie', function($join) {
+                $join->on('movie_category_movie.id_movie', '=', 'movie.id');
+            })
+            ->join('category_movie', function($join) {
+                $join->on('movie_category_movie.id_category_movie', '=', 'category_movie.id');
+            })
+            ->orderBy('movie.title', 'asc')
+            ->get();
+        
+        $movies = self::groupMovies($movies);
         
         $categoriesMovie = QueryBuilder::table('category_movie')
         ->select()
@@ -82,9 +94,20 @@ class MovieController extends Controller
             $movie = strtolower($movie);
 
             $moviesFiltered = QueryBuilder::table('movie')
-            ->select()
+            ->select(['movie.*', 'media.slug', 'media.alt', 'category_movie.name as category_name'])
+            ->join('media', function($join) {
+                $join->on('media.id', '=', 'movie.id_media');
+            })
+            ->join('movie_category_movie', function($join) {
+                $join->on('movie_category_movie.id_movie', '=', 'movie.id');
+            })
+            ->join('category_movie', function($join) {
+                $join->on('movie_category_movie.id_category_movie', '=', 'category_movie.id');
+            })
             ->where("movie.title", 'ILIKE', '%'.$movie.'%')
-            ->get();        
+            ->get();
+
+            $moviesFiltered = self::groupMovies($moviesFiltered);
         }
 
         if (!$query)
@@ -95,7 +118,7 @@ class MovieController extends Controller
             'moviesFiltered' => $moviesFiltered,
             'categoriesMovie' => $categoriesMovie, 
             'categoriesMovieFilted' => $categoriesMovieFiltered, 
-        ]);
+        ], [], ['/css/back/movie.css']);
     }
 
 
@@ -244,6 +267,26 @@ class MovieController extends Controller
         }
 
         return $comments;
+    }
+
+    private function groupMovies($movies): array
+    {
+        $groupedMovies = [];
+        foreach ($movies as $movie) {
+            $movieId = $movie['id'];
+            $category = $movie['category_name'];
+        
+            if (isset($groupedMovies[$movieId])) {
+                $groupedMovies[$movieId]['categories'][] = $category;
+            } else {
+                $groupedMovies[$movieId] = $movie;
+                $groupedMovies[$movieId]['categories'] = [$category];
+            }
+
+            unset($groupedMovies[$movieId]['category_name']);
+        }
+
+        return $groupedMovies;
     }
 
     private function redirectToList(): void
