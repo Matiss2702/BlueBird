@@ -7,7 +7,7 @@ use App\Core\Model;
 class Movie extends Model
 {
     protected static $table = DB_PREFIX . 'movie';
-    protected static $fillable = ['title', 'description', 'release_date', 'duration', 'created_at', 'updated_at'];
+    protected static $fillable = ['title', 'description', 'release_date', 'duration', 'id_media', 'created_at', 'updated_at'];
 
     protected $id;
 
@@ -15,6 +15,7 @@ class Movie extends Model
     protected $description;
     protected $release_date;
     protected $duration;
+    protected $id_media;
     protected $created_at;
     protected $updated_at;
 
@@ -62,12 +63,20 @@ class Movie extends Model
         $this->duration = $duration;
     }
 
+    public function getIdMedia() {
+        return $this->id_media;
+    }
+
+    public function setIdMedia($id_media) {
+        $this->id_media = $id_media;
+    }
+
     public function getCreatedAt() {
         return $this->created_at;
     }
 
     public function setCreatedAt($created_at) {
-        return $this->created_at = $created_at;
+        $this->created_at = $created_at;
     }
 
     public function getUpdatedAt() {

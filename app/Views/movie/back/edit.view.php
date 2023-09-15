@@ -1,4 +1,3 @@
-<?php $duration = sprintf("%02d:%02d:00", floor($movie->getDuration() / 60), $movie->getDuration() % 60); ?>
 <div class="card w-100">
     <div class="card-header d-flex">
         <h4 class="card-title">Modifier la maison de production #<?= $movie->getId() ?> - <?= $movie->getTitle() ?></h4>
@@ -12,6 +11,21 @@
     <div class="container my-4">
         <div class="w-100">
             <form action="/admin/movie/update/<?= $movie->getId() ?>" method="POST">
+                <div class="form-group">
+                    <label for="id_media">Poster</label>
+                    <select name="id_media" id="id_media" class="form-control" required>
+                        <?php foreach($medias as $media): ?>
+                            <option value="<?= $media['id'] ?>">
+                                <?= $media['name'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php if(isset($errors['id_media'])): ?>
+                        <?php foreach($errors['id_media'] as $error): ?>
+                            <div class="text-danger"><?= $error; ?></div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
                 <div class="form-group">
                     <label for="title">Titre</label>
                     <input type="text" id="title" name="title" class="form-control" value="<?= $old->title ?? $movie->getTitle()?>" required>

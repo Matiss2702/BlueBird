@@ -41,10 +41,18 @@ class MovieController extends Controller
 
     public function createAction(): void
     {
+        $medias = QueryBuilder::table('media')
+            ->select()
+            ->where('type', 'png')
+            ->orWhere('type', 'jpg')
+            ->orWhere('type', 'jpeg')
+            ->get();
+        
         $categoriesMovie = CategoryMovie::all();
         $movieCategoriesMovie = MovieCategoryMovie::all();
 
         view('movie/back/create', 'back', [
+            'medias' => $medias,
             'categoriesMovie' => $categoriesMovie,
             'movieCategoriesMovie' => $movieCategoriesMovie
         ]);
@@ -68,12 +76,18 @@ class MovieController extends Controller
 
     public function showAction($id): void
     {
-        $movie = Movie::find($id);
+        $movie = QueryBuilder::table('movie')
+            ->select(['movie.*', 'media.*'])
+            ->where('movie.id', $id)
+            ->join('media', function($join) {
+                $join->on('movie.id_media', '=', 'media.id');
+            })
+            ->first();
+
         $movieCategoriesMovie = QueryBuilder::table('movie_category_movie')
             ->select()
             ->where('id_movie', $id)
             ->get();
-
         $movieCategoriesMovie = array_values(array_column($movieCategoriesMovie, 'id_category_movie'));
                 
         if (!$movie)
@@ -81,27 +95,37 @@ class MovieController extends Controller
 
         view('movie/back/show', 'back', [
             'movie' => $movie,
+            'duration' => self::formatDuration($movie['duration']),
             'movieCategoriesMovie' => $movieCategoriesMovie,
             'categoriesMovie' => CategoryMovie::all(), 
-        ]);
+        ], [], ['/css/back/movie.css']);
     }
 
     public function editAction($id): void
     {
         $movie = Movie::find($id);
+
         $categoriesMovie = CategoryMovie::all();
         $movieCategoriesMovie = QueryBuilder::table('movie_category_movie')
             ->select()
             ->where('id_movie', $id)
             ->get();
-        
         $movieCategoriesMovie = array_values(array_column($movieCategoriesMovie, 'id_category_movie'));
+
+        $medias = QueryBuilder::table('media')
+            ->select()
+            ->where('type', 'png')
+            ->orWhere('type', 'jpg')
+            ->orWhere('type', 'jpeg')
+            ->get();
 
         if (!$movie)
             $this->redirectToList();    
 
         view('movie/back/edit', 'back', [
             'movie' => $movie,
+            'medias' => $medias,
+            'duration' => self::formatDuration($movie->getDuration()),
             'categoriesMovie' => $categoriesMovie,
             'movieCategoriesMovie' => $movieCategoriesMovie
         ]);
@@ -136,6 +160,11 @@ class MovieController extends Controller
         }
 
         $this->redirectToList();
+    }
+
+    private function formatDuration($duration): string
+    {
+        return sprintf("%02d:%02d:00", floor($duration / 60), $duration % 60);
     }
 
     private function redirectToList(): void
