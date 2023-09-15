@@ -1,0 +1,9 @@
+.movie-poster {
+    height: 300px;
+    border-radius: 4px;
+}
+
+.movie-poster-large {
+    height: 550px;
+    border-radius: 4px;
+}
