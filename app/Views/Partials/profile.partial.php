@@ -1,11 +1,9 @@
 <div class="nav-item dropdown no-arrow">
-    <?php if (isConnected()): ?>
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <?php if (isConnected()) : ?>
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img class="img-profile rounded-circle" src="/img/user-128.svg">
         </a>
-        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-            aria-labelledby="userDropdown">
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/account/profile">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 Profil
@@ -20,7 +18,7 @@
                 Déconnexion
             </a>
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <a class="nav-link" href="/login">
             <i class="fas fa-lg fa-user text-gray-400"></i>
         </a>

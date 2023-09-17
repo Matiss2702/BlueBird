@@ -25,7 +25,7 @@ function isConnected(): bool
 
 function onProd(): bool
 {
-    return false;
+    return true;
 }
 
 function getBaseUrl(): string
